@@ -1,5 +1,5 @@
 using PersonalAiAssistant.Clients;
-using PersonalAiAssistant.Models;
+using PersonalAiAssistant.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,12 +9,12 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<ConversationService>();
+
 builder.Services.AddHttpClient<IChatClient, LmStudioChatClient>(client =>
 {
     client.BaseAddress = new Uri("http://127.0.0.1:1234");
 });
-
-builder.Services.Configure<LmStudioOptions>(builder.Configuration.GetSection("LmStudio"));
 
 var app = builder.Build();
 
