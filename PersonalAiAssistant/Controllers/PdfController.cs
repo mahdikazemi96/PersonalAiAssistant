@@ -12,15 +12,18 @@ public class PdfController : ControllerBase
     private readonly IDocumentReader _documentReader;
     private readonly IEmbeddingClient _embeddingClient;
     private readonly QdrantService _qdrantService;
+    private readonly TextChunker _chunker;
 
     public PdfController(
         IDocumentReader documentReader,
         IEmbeddingClient embeddingClient,
-        QdrantService qdrantService)
+        QdrantService qdrantService,
+        TextChunker chunker)
     {
         _documentReader = documentReader;
         _embeddingClient = embeddingClient;
         _qdrantService = qdrantService;
+        _chunker = chunker;
     }
 
     [HttpPost]
@@ -33,18 +36,24 @@ public class PdfController : ControllerBase
 
         var text = await _documentReader.ExtractTextAsync(stream);
 
-        var embedding =
-            await _embeddingClient.CreateEmbeddingAsync(text);
-
         await _qdrantService.CreateCollectionIfNotExistsAsync();
 
-        await _qdrantService.InsertDocumentAsync(
-            text,
-            embedding);
+        var chunks = _chunker.Split(text);
+
+        foreach (var chunk in chunks)
+        {
+            var embedding =
+                await _embeddingClient.CreateEmbeddingAsync(chunk);
+
+            await _qdrantService.InsertDocumentAsync(
+                chunk,
+                embedding);
+        }
 
         return Ok(new UploadPdfResponse
         {
-            Characters = text.Length
+            Characters = text.Length,
+            Chunks = chunks.Count
         });
     }
 }

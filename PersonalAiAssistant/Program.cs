@@ -32,6 +32,8 @@ builder.Services.AddSingleton<PromptBuilder>();
 
 builder.Services.AddSingleton<IDocumentReader, PdfDocumentReader>();
 
+builder.Services.AddSingleton<TextChunker>();
+
 var app = builder.Build();
 
 app.UseSwagger();
