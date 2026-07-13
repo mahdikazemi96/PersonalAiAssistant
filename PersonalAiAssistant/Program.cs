@@ -30,6 +30,8 @@ builder.Services.AddScoped<RagService>();
 
 builder.Services.AddSingleton<PromptBuilder>();
 
+builder.Services.AddSingleton<IDocumentReader, PdfDocumentReader>();
+
 var app = builder.Build();
 
 app.UseSwagger();
