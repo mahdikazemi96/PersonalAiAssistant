@@ -21,6 +21,11 @@ builder.Services.AddHttpClient<IEmbeddingClient, LmStudioEmbeddingClient>(client
     client.BaseAddress = new Uri("http://127.0.0.1:1234");
 });
 
+builder.Services.AddHttpClient<QdrantService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:6333");
+});
+
 var app = builder.Build();
 
 app.UseSwagger();
