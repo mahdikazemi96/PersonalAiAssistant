@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PersonalAiAssistant.Clients;
 using PersonalAiAssistant.Models;
 using PersonalAiAssistant.Services;
 
@@ -9,26 +8,22 @@ namespace PersonalAiAssistant.Controllers;
 [Route("api/chat")]
 public class ChatController : ControllerBase
 {
-    private readonly IChatClient _chatClient;
+    private readonly RagService _ragService;
     private readonly ConversationService _conversationService;
 
     public ChatController(
-        IChatClient chatClient,
+        RagService ragService,
         ConversationService conversationService)
     {
-        _chatClient = chatClient;
+        _ragService = ragService;
         _conversationService = conversationService;
     }
 
     [HttpPost]
     public async Task<ActionResult<ChatResponse>> Chat(ChatRequest request)
     {
-        _conversationService.AddUserMessage(request.Message);
-
-        var answer = await _chatClient.ChatAsync(
-            _conversationService.GetMessages());
-
-        _conversationService.AddAssistantMessage(answer);
+        var answer =
+            await _ragService.AskAsync(request.Message);
 
         return Ok(new ChatResponse
         {
