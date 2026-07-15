@@ -2,50 +2,71 @@
 
 public class TextChunker
 {
-    public List<string> Split(
-        string text,
-        int chunkSize = 500,
-        int overlap = 100)
+    private const int MaxChunkLength = 1000;
+
+    public List<string> Split(string text)
     {
         var chunks = new List<string>();
 
         if (string.IsNullOrWhiteSpace(text))
             return chunks;
 
-        int start = 0;
+        var paragraphs = text.Split(
+            new[] { "\r\n\r\n", "\n\n" },
+            StringSplitOptions.RemoveEmptyEntries);
 
-        while (start < text.Length)
+        foreach (var paragraph in paragraphs)
         {
-            int end = Math.Min(start + chunkSize, text.Length);
+            var value = paragraph.Trim();
 
-            // اگر آخر متن نیست، نزدیک‌ترین Space یا Enter را پیدا کن
-            if (end < text.Length)
+            if (string.IsNullOrWhiteSpace(value))
+                continue;
+
+            if (value.Length <= MaxChunkLength)
             {
-                while (end > start && text[end] != ' ' && text[end] != '\n')
-                {
-                    end--;
-                }
-
-                // اگر هیچ Space پیدا نشد همان اندازه اولیه را استفاده کن
-                if (end == start)
-                {
-                    end = Math.Min(start + chunkSize, text.Length);
-                }
+                chunks.Add(value);
+                continue;
             }
 
-            var chunk = text.Substring(start, end - start).Trim();
-
-            if (!string.IsNullOrWhiteSpace(chunk))
-            {
-                chunks.Add(chunk);
-            }
-
-            if (end >= text.Length)
-                break;
-
-            start = Math.Max(end - overlap, 0);
+            SplitLargeParagraph(value, chunks);
         }
 
         return chunks;
+    }
+
+    private static void SplitLargeParagraph(
+     string paragraph,
+     List<string> chunks)
+    {
+        const int overlapWords = 30;
+
+        var words = paragraph.Split(
+            ' ',
+            StringSplitOptions.RemoveEmptyEntries);
+
+        var currentWords = new List<string>();
+
+        foreach (var word in words)
+        {
+            var currentText =
+                string.Join(" ", currentWords);
+
+            if (currentText.Length + word.Length + 1 > MaxChunkLength)
+            {
+                chunks.Add(string.Join(" ", currentWords));
+
+                currentWords =
+                    currentWords
+                        .Skip(Math.Max(0, currentWords.Count - overlapWords))
+                        .ToList();
+            }
+
+            currentWords.Add(word);
+        }
+
+        if (currentWords.Count > 0)
+        {
+            chunks.Add(string.Join(" ", currentWords));
+        }
     }
 }
