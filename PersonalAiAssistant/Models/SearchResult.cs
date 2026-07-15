@@ -7,4 +7,6 @@ public class SearchResult
     public string FileName { get; set; } = string.Empty;
 
     public int ChunkNumber { get; set; }
+
+    public float Score { get; set; }
 }
