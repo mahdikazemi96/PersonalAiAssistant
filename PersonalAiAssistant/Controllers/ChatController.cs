@@ -27,7 +27,8 @@ public class ChatController : ControllerBase
 
         return Ok(new ChatResponse
         {
-            Answer = answer
+            Answer = answer.Answer,
+            Sources = answer.Sources
         });
     }
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PersonalAiAssistant.Clients;
 using PersonalAiAssistant.Models;
 using PersonalAiAssistant.Services;
 
@@ -10,19 +9,16 @@ namespace PersonalAiAssistant.Controllers;
 public class PdfController : ControllerBase
 {
     private readonly IDocumentReader _documentReader;
-    private readonly IEmbeddingClient _embeddingClient;
-    private readonly QdrantService _qdrantService;
+    private readonly DocumentService _documentService;
     private readonly TextChunker _chunker;
 
     public PdfController(
         IDocumentReader documentReader,
-        IEmbeddingClient embeddingClient,
-        QdrantService qdrantService,
+        DocumentService documentService,
         TextChunker chunker)
     {
         _documentReader = documentReader;
-        _embeddingClient = embeddingClient;
-        _qdrantService = qdrantService;
+        _documentService = documentService;
         _chunker = chunker;
     }
 
@@ -36,19 +32,31 @@ public class PdfController : ControllerBase
 
         var text = await _documentReader.ExtractTextAsync(stream);
 
-        await _qdrantService.CreateCollectionIfNotExistsAsync();
-
         var chunks = _chunker.Split(text);
 
-        foreach (var chunk in chunks)
-        {
-            var embedding =
-                await _embeddingClient.CreateEmbeddingAsync(chunk);
+        const int maxConcurrency = 4;
 
-            await _qdrantService.InsertDocumentAsync(
-                chunk,
-                embedding);
-        }
+        using var semaphore = new SemaphoreSlim(maxConcurrency);
+
+        var tasks = chunks
+            .Select(async (chunk, index) =>
+            {
+                await semaphore.WaitAsync();
+
+                try
+                {
+                    await _documentService.SaveAsync(
+                        chunk,
+                        file.FileName,
+                        index + 1);
+                }
+                finally
+                {
+                    semaphore.Release();
+                }
+            });
+
+        await Task.WhenAll(tasks);
 
         return Ok(new UploadPdfResponse
         {

@@ -6,15 +6,6 @@ public class ConversationService
 {
     private readonly List<ChatMessage> _messages = new();
 
-    public ConversationService()
-    {
-        _messages.Add(new ChatMessage
-        {
-            Role = "system",
-            Content = "You are a helpful AI assistant."
-        });
-    }
-
     public void AddUserMessage(string message)
     {
         _messages.Add(new ChatMessage
