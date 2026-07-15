@@ -1,0 +1,10 @@
+﻿namespace PersonalAiAssistant.Models;
+
+public class SearchResult
+{
+    public string Text { get; set; } = string.Empty;
+
+    public string FileName { get; set; } = string.Empty;
+
+    public int ChunkNumber { get; set; }
+}

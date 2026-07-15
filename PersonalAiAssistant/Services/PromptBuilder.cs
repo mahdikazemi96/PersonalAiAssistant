@@ -4,40 +4,42 @@ namespace PersonalAiAssistant.Services;
 
 public class PromptBuilder
 {
-    public List<ChatMessage> Build(List<ChatMessage> history, List<string> documents)
+    public List<ChatMessage> Build(
+        List<ChatMessage> history,
+        List<SearchResult> documents)
     {
         var messages = new List<ChatMessage>();
 
-        // System Prompt اصلی
         messages.Add(new ChatMessage
         {
             Role = "system",
             Content = "You are a helpful AI assistant."
         });
 
-        // Context
         if (documents.Any())
         {
+            var context = string.Join(
+                Environment.NewLine + Environment.NewLine,
+                documents.Select(x => x.Text));
+
             messages.Add(new ChatMessage
             {
                 Role = "system",
                 Content =
                     $"""
-                    Use the following information when answering.
+                    Use the following context to answer the user's question.
                     
                     Context:
                     
-                    {string.Join(Environment.NewLine, documents)}
+                    {context}
                     
-                    If the answer is not in the context,
-                    you may answer from your own knowledge.
+                    If the answer cannot be found in the context,
+                    you may answer using your own knowledge.
                     """
             });
         }
 
-        // Conversation History
-        messages.AddRange(
-            history.Where(x => x.Role != "system"));
+        messages.AddRange(history);
 
         return messages;
     }

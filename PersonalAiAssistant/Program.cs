@@ -11,6 +11,16 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ConversationService>();
 
+builder.Services.AddSingleton<PromptBuilder>();
+
+builder.Services.AddSingleton<IDocumentReader, PdfDocumentReader>();
+
+builder.Services.AddSingleton<TextChunker>();
+
+builder.Services.AddScoped<RagService>();
+
+builder.Services.AddScoped<DocumentService>();
+
 builder.Services.AddHttpClient<IChatClient, LmStudioChatClient>(client =>
 {
     client.BaseAddress = new Uri("http://127.0.0.1:1234");
@@ -25,14 +35,6 @@ builder.Services.AddHttpClient<QdrantService>(client =>
 {
     client.BaseAddress = new Uri("http://127.0.0.1:6333");
 });
-
-builder.Services.AddScoped<RagService>();
-
-builder.Services.AddSingleton<PromptBuilder>();
-
-builder.Services.AddSingleton<IDocumentReader, PdfDocumentReader>();
-
-builder.Services.AddSingleton<TextChunker>();
 
 var app = builder.Build();
 
