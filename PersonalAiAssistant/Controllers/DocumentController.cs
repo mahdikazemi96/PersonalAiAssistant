@@ -5,40 +5,44 @@ using PersonalAiAssistant.Services;
 namespace PersonalAiAssistant.Controllers;
 
 [ApiController]
-[Route("api/document")]
-public class DocumentController : ControllerBase
+[Route("api/document-upload")]
+public class DocumentUploadController : ControllerBase
 {
+    private readonly DocumentReaderFactory _readerFactory;
     private readonly DocumentService _documentService;
 
-    public DocumentController(DocumentService documentService)
+    public DocumentUploadController(
+        DocumentReaderFactory readerFactory,
+        DocumentService documentService)
     {
+        _readerFactory = readerFactory;
         _documentService = documentService;
     }
 
     [HttpPost]
-    public async Task<IActionResult> Save(SaveDocumentRequest request)
+    public async Task<ActionResult<UploadPdfResponse>> Upload(IFormFile file)
     {
-        if (string.IsNullOrWhiteSpace(request.Text))
-            return BadRequest();
+        if (file == null || file.Length == 0)
+            return BadRequest("File is required.");
 
-        await _documentService.SaveAsync(
-            request.Text,
-            "Manual",
-            1);
+        var reader =
+            _readerFactory.GetReader(file.FileName);
 
-        return Ok();
-    }
+        using var stream =
+            file.OpenReadStream();
 
-    [HttpPost("search")]
-    public async Task<ActionResult<List<SearchResult>>> Search(
-        SaveDocumentRequest request)
-    {
-        if (string.IsNullOrWhiteSpace(request.Text))
-            return BadRequest();
+        var text =
+            await reader.ExtractTextAsync(stream);
 
-        var documents =
-            await _documentService.SearchAsync(request.Text);
+        var chunkCount =
+            await _documentService.SaveAsync(
+                text,
+                file.FileName);
 
-        return Ok(documents);
+        return Ok(new UploadPdfResponse
+        {
+            Characters = text.Length,
+            Chunks = chunkCount
+        });
     }
 }

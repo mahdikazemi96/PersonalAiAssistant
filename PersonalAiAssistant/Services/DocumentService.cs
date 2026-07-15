@@ -1,5 +1,4 @@
 ﻿using PersonalAiAssistant.Clients;
-using PersonalAiAssistant.Models;
 
 namespace PersonalAiAssistant.Services;
 
@@ -7,44 +6,39 @@ public class DocumentService
 {
     private readonly IEmbeddingClient _embeddingClient;
     private readonly QdrantService _qdrantService;
+    private readonly TextChunker _chunker;
 
     public DocumentService(
         IEmbeddingClient embeddingClient,
-        QdrantService qdrantService)
+        QdrantService qdrantService,
+        TextChunker chunker)
     {
         _embeddingClient = embeddingClient;
         _qdrantService = qdrantService;
+        _chunker = chunker;
     }
 
-    public async Task SaveAsync(
+    public async Task<int> SaveAsync(
         string text,
-        string fileName,
-        int chunkNumber)
+        string fileName)
     {
-        if (string.IsNullOrWhiteSpace(text))
-            return;
-
         await _qdrantService.CreateCollectionIfNotExistsAsync();
 
-        var embedding =
-            await _embeddingClient.CreateEmbeddingAsync(text);
+        var chunks =
+            _chunker.Split(text);
 
-        await _qdrantService.InsertDocumentAsync(
-            text,
-            embedding,
-            fileName,
-            chunkNumber);
-    }
+        for (int i = 0; i < chunks.Count; i++)
+        {
+            var embedding =
+                await _embeddingClient.CreateEmbeddingAsync(chunks[i]);
 
-    public async Task<List<SearchResult>> SearchAsync(
-        string text,
-        int limit = 5)
-    {
-        var embedding =
-            await _embeddingClient.CreateEmbeddingAsync(text);
+            await _qdrantService.InsertDocumentAsync(
+                chunks[i],
+                embedding,
+                fileName,
+                i + 1);
+        }
 
-        return await _qdrantService.SearchAsync(
-            embedding,
-            limit);
+        return chunks.Count;
     }
 }

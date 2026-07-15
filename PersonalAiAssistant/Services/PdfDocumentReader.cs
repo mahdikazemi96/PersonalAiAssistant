@@ -4,11 +4,18 @@ namespace PersonalAiAssistant.Services;
 
 public class PdfDocumentReader : IDocumentReader
 {
+    public bool CanRead(string extension)
+    {
+        return extension.Equals(".pdf",
+            StringComparison.OrdinalIgnoreCase);
+    }
+
     public Task<string> ExtractTextAsync(Stream stream)
     {
-        using var document = PdfDocument.Open(stream);
+        using var document =
+            PdfDocument.Open(stream);
 
-        var text = "";
+        var text = string.Empty;
 
         foreach (var page in document.GetPages())
         {
