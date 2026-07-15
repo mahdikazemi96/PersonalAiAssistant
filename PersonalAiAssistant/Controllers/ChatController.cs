@@ -8,14 +8,14 @@ namespace PersonalAiAssistant.Controllers;
 [Route("api/chat")]
 public class ChatController : ControllerBase
 {
-    private readonly RagService _ragService;
+    private readonly AssistantService _assistantService;
     private readonly ConversationService _conversationService;
 
     public ChatController(
-        RagService ragService,
+        AssistantService assistantService,
         ConversationService conversationService)
     {
-        _ragService = ragService;
+        _assistantService = assistantService;
         _conversationService = conversationService;
     }
 
@@ -23,7 +23,7 @@ public class ChatController : ControllerBase
     public async Task<ActionResult<ChatResponse>> Chat(ChatRequest request)
     {
         var answer =
-            await _ragService.AskAsync(request.Message);
+            await _assistantService.AskAsync(request.Message);
 
         return Ok(new ChatResponse
         {

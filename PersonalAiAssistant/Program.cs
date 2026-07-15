@@ -2,6 +2,7 @@ using PersonalAiAssistant.Clients;
 using PersonalAiAssistant.Middlewares;
 using PersonalAiAssistant.Models;
 using PersonalAiAssistant.Services;
+using PersonalAiAssistant.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,16 @@ builder.Services.AddSingleton<IDocumentReader, WordDocumentReader>();
 builder.Services.AddSingleton<IDocumentReader, TextDocumentReader>();
 
 builder.Services.AddSingleton<IDocumentReader, MarkdownDocumentReader>();
+
+builder.Services.AddSingleton<ITool, CalculatorTool>();
+
+builder.Services.AddSingleton<ToolRouter>();
+
+builder.Services.AddScoped<AssistantService>();
+
+builder.Services.AddScoped<ToolAgentService>();
+
+builder.Services.AddSingleton<ToolAgentPromptBuilder>();
 
 builder.Services.AddHttpClient<IChatClient, LmStudioChatClient>(client =>
 {

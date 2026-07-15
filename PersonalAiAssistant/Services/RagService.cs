@@ -10,7 +10,7 @@ public class RagService
     private readonly ConversationService _conversationService;
     private readonly PromptBuilder _promptBuilder;
     private readonly IChatClient _chatClient;
-    private readonly HybridRankingService _hybridSearchService;
+    private readonly HybridRankingService _hybridRankingService;
 
     public RagService(
         IEmbeddingClient embeddingClient,
@@ -18,30 +18,51 @@ public class RagService
         ConversationService conversationService,
         PromptBuilder promptBuilder,
         IChatClient chatClient,
-        HybridRankingService hybridSearchService)
+        HybridRankingService hybridRankingService)
     {
         _embeddingClient = embeddingClient;
         _qdrantService = qdrantService;
         _conversationService = conversationService;
         _promptBuilder = promptBuilder;
         _chatClient = chatClient;
-        _hybridSearchService = hybridSearchService;
+        _hybridRankingService = hybridRankingService;
     }
 
     public async Task<ChatResponse> AskAsync(string question)
     {
+        
+        //-------------------------------------------------
+        // 2) Conversation
+        //-------------------------------------------------
+
         _conversationService.AddUserMessage(question);
+
+        //-------------------------------------------------
+        // 3) Embedding
+        //-------------------------------------------------
 
         var embedding =
             await _embeddingClient.CreateEmbeddingAsync(question);
 
+        //-------------------------------------------------
+        // 4) Vector Search
+        //-------------------------------------------------
+
         var documents =
             await _qdrantService.SearchAsync(embedding);
 
+        //-------------------------------------------------
+        // 5) Hybrid Ranking
+        //-------------------------------------------------
+
         documents =
-            _hybridSearchService.Rank(
+            _hybridRankingService.Rank(
                 question,
                 documents);
+
+        //-------------------------------------------------
+        // 6) Prompt
+        //-------------------------------------------------
 
         var history =
             _conversationService.GetMessages();
@@ -51,10 +72,18 @@ public class RagService
                 history,
                 documents);
 
+        //-------------------------------------------------
+        // 7) LLM
+        //-------------------------------------------------
+
         var answer =
             await _chatClient.ChatAsync(messages);
 
         _conversationService.AddAssistantMessage(answer);
+
+        //-------------------------------------------------
+        // 8) Response
+        //-------------------------------------------------
 
         var response = new ChatResponse
         {
