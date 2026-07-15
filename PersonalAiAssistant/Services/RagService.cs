@@ -10,19 +10,22 @@ public class RagService
     private readonly ConversationService _conversationService;
     private readonly PromptBuilder _promptBuilder;
     private readonly IChatClient _chatClient;
+    private readonly HybridRankingService _hybridSearchService;
 
     public RagService(
         IEmbeddingClient embeddingClient,
         QdrantService qdrantService,
         ConversationService conversationService,
         PromptBuilder promptBuilder,
-        IChatClient chatClient)
+        IChatClient chatClient,
+        HybridRankingService hybridSearchService)
     {
         _embeddingClient = embeddingClient;
         _qdrantService = qdrantService;
         _conversationService = conversationService;
         _promptBuilder = promptBuilder;
         _chatClient = chatClient;
+        _hybridSearchService = hybridSearchService;
     }
 
     public async Task<ChatResponse> AskAsync(string question)
@@ -35,11 +38,18 @@ public class RagService
         var documents =
             await _qdrantService.SearchAsync(embedding);
 
+        documents =
+            _hybridSearchService.Rank(
+                question,
+                documents);
+
         var history =
             _conversationService.GetMessages();
 
         var messages =
-            _promptBuilder.Build(history, documents);
+            _promptBuilder.Build(
+                history,
+                documents);
 
         var answer =
             await _chatClient.ChatAsync(messages);

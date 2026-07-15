@@ -119,7 +119,8 @@ public class QdrantService
             {
                 Text = text,
                 FileName = GetString(point.Payload, "fileName", "Unknown"),
-                ChunkNumber = GetInt(point.Payload, "chunkNumber", 1)
+                ChunkNumber = GetInt(point.Payload, "chunkNumber", 1),
+                Score = point.Score
             });
         }
 

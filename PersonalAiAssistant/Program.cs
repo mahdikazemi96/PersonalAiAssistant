@@ -15,6 +15,8 @@ builder.Services.AddSingleton<ConversationService>();
 
 builder.Services.AddSingleton<PromptBuilder>();
 
+builder.Services.AddSingleton<HybridRankingService>();
+
 builder.Services.AddSingleton<TextChunker>();
 
 builder.Services.AddScoped<RagService>();
