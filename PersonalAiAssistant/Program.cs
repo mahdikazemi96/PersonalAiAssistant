@@ -44,6 +44,12 @@ builder.Services.AddScoped<ToolAgentService>();
 
 builder.Services.AddSingleton<ToolAgentPromptBuilder>();
 
+builder.Services.AddSingleton<ISafeFileSystemService, SafeFileSystemService>();
+
+builder.Services.AddSingleton<ITool, FileSystemTool>();
+
+builder.Services.AddSingleton<ITool, WeatherTool>();
+
 builder.Services.AddHttpClient<IChatClient, LmStudioChatClient>(client =>
 {
     client.BaseAddress = new Uri("http://127.0.0.1:1234");
@@ -57,6 +63,12 @@ builder.Services.AddHttpClient<IEmbeddingClient, LmStudioEmbeddingClient>(client
 builder.Services.AddHttpClient<QdrantService>(client =>
 {
     client.BaseAddress = new Uri("http://127.0.0.1:6333");
+});
+
+builder.Services.AddHttpClient<IWeatherService, OpenWeatherService>(client =>
+{
+    client.BaseAddress =
+        new Uri("https://api.openweathermap.org/data/2.5/");
 });
 
 builder.Services.Configure<LmStudioOptions>(builder.Configuration.GetSection("LmStudio"));
