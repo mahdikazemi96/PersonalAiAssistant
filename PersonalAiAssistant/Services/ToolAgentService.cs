@@ -64,10 +64,9 @@ public class ToolAgentService
             return null;
         }
 
-        if (selection == null)
-            return null;
-
-        if (string.IsNullOrWhiteSpace(selection.Tool))
+        if (selection == null ||
+            string.IsNullOrWhiteSpace(selection.Tool) || 
+            selection.Tool.ToLower() == "none")
         {
             return null;
         }
