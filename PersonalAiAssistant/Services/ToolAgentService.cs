@@ -43,14 +43,9 @@ public class ToolAgentService
         };
 
         var selectionResponse =
-            await _chatClient.ChatAsync(selectionMessages);
-
-        if (selectionResponse.Trim().Equals(
-                "NONE",
-                StringComparison.OrdinalIgnoreCase))
-        {
-            return null;
-        }
+            await _chatClient.ChatAsync(
+                selectionMessages,
+                ToolSelectionResult.ResponseFormat);
 
         ToolSelectionResult? selection;
 
@@ -69,9 +64,12 @@ public class ToolAgentService
             return null;
         }
 
-        if (selection == null)
+        if (selection == null ||
+            string.IsNullOrWhiteSpace(selection.Tool) || 
+            selection.Tool.ToLower() == "none")
+        {
             return null;
-
+        }
         //------------------------------------------
         // Step 2
         // Execute tool
