@@ -1,4 +1,7 @@
-﻿namespace PersonalAiAssistant.OpenAi;
+﻿using PersonalAiAssistant.Models.Llm;
+using System.Text.Json.Serialization;
+
+namespace PersonalAiAssistant.OpenAi;
 
 public class ChatCompletionRequest
 {
@@ -7,6 +10,10 @@ public class ChatCompletionRequest
     public double Temperature { get; set; }
 
     public List<ChatCompletionMessage> Messages { get; set; } = new();
+
+    [JsonPropertyName("response_format")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public ResponseFormat? ResponseFormat { get; set; }
 }
 
 public class ChatCompletionMessage

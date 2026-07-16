@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using PersonalAiAssistant.Models;
+using PersonalAiAssistant.Models.Llm;
 using PersonalAiAssistant.OpenAi;
 using System.Net.Http.Json;
 
@@ -18,12 +19,15 @@ public class LmStudioChatClient : IChatClient
         _options = options.Value;
     }
 
-    public async Task<string> ChatAsync(List<ChatMessage> messages)
+    public async Task<string> ChatAsync(
+        List<ChatMessage> messages,
+        ResponseFormat? responseFormat = null)
     {
         var request = new ChatCompletionRequest
         {
             Model = _options.Model!,
             Temperature = _options.Temperature!,
+            ResponseFormat = responseFormat,
             Messages = messages
                 .Select(x => new ChatCompletionMessage
                 {
@@ -33,9 +37,10 @@ public class LmStudioChatClient : IChatClient
                 .ToList()
         };
 
-        var response = await _httpClient.PostAsJsonAsync(
-            "/v1/chat/completions",
-            request);
+        var response =
+            await _httpClient.PostAsJsonAsync(
+                "/v1/chat/completions",
+                request);
 
         response.EnsureSuccessStatusCode();
 
@@ -43,14 +48,10 @@ public class LmStudioChatClient : IChatClient
             await response.Content.ReadFromJsonAsync<ChatCompletionResponse>();
 
         if (completion == null)
-        {
             throw new Exception("LM Studio returned an empty response.");
-        }
 
         if (completion.Choices.Count == 0)
-        {
             throw new Exception("LM Studio returned no choices.");
-        }
 
         return completion
             .Choices
