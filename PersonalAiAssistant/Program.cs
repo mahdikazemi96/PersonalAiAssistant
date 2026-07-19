@@ -34,6 +34,12 @@ builder.Services.AddSingleton<IDocumentReader, TextDocumentReader>();
 
 builder.Services.AddSingleton<IDocumentReader, MarkdownDocumentReader>();
 
+builder.Services.AddSingleton<IDatabaseSchemaReader, SqlServerSchemaReader>();
+
+builder.Services.AddSingleton<ISqlToolService, SqlToolService>();
+
+builder.Services.AddSingleton<SqlValidator>();
+
 builder.Services.AddSingleton<ITool, CalculatorTool>();
 
 builder.Services.AddSingleton<ToolRouter>();
@@ -44,11 +50,15 @@ builder.Services.AddScoped<ToolAgentService>();
 
 builder.Services.AddSingleton<ToolAgentPromptBuilder>();
 
+builder.Services.AddSingleton<SqlPromptBuilder>();
+
 builder.Services.AddSingleton<ISafeFileSystemService, SafeFileSystemService>();
 
 builder.Services.AddSingleton<ITool, FileSystemTool>();
 
 builder.Services.AddSingleton<ITool, WeatherTool>();
+
+builder.Services.AddSingleton<ITool, SqlTool>();
 
 builder.Services.AddHttpClient<IChatClient, LmStudioChatClient>(client =>
 {
