@@ -8,6 +8,8 @@ public interface ITool
 
     string Description { get; }
 
+    Task<string?> GetContextAsync();
+
     Task<ToolExecutionResult> ExecuteAsync(
         string arguments);
 }

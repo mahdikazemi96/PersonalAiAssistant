@@ -20,7 +20,7 @@ builder.Services.AddSingleton<HybridRankingService>();
 
 builder.Services.AddSingleton<TextChunker>();
 
-builder.Services.AddScoped<RagService>();
+builder.Services.AddScoped<AnswerGenerationService>();
 
 builder.Services.AddScoped<DocumentService>();
 
@@ -46,7 +46,11 @@ builder.Services.AddSingleton<ToolRouter>();
 
 builder.Services.AddScoped<AssistantService>();
 
-builder.Services.AddScoped<ToolAgentService>();
+builder.Services.AddScoped<PlannerService>();
+
+builder.Services.AddScoped<AgentService>();
+
+builder.Services.AddScoped<ToolExecutionService>();
 
 builder.Services.AddSingleton<ToolAgentPromptBuilder>();
 
@@ -63,6 +67,7 @@ builder.Services.AddSingleton<ITool, SqlTool>();
 builder.Services.AddHttpClient<IChatClient, LmStudioChatClient>(client =>
 {
     client.BaseAddress = new Uri("http://127.0.0.1:1234");
+    client.Timeout = TimeSpan.FromMinutes(2);
 });
 
 builder.Services.AddHttpClient<IEmbeddingClient, LmStudioEmbeddingClient>(client =>

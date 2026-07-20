@@ -1,6 +1,4 @@
-﻿namespace PersonalAiAssistant.Models;
-
-public class ChatMessage
+﻿public class ChatMessage
 {
     public string Role { get; set; } = string.Empty;
 

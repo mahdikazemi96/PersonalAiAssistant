@@ -1,126 +1,118 @@
-﻿using PersonalAiAssistant.Models;
+﻿using System.Text;
+using PersonalAiAssistant.Models;
 using PersonalAiAssistant.Tools;
-using System.Text;
 
 namespace PersonalAiAssistant.Services;
 
 public class ToolAgentPromptBuilder
 {
-    public string BuildSelectionPrompt(
-        string question,
-        IReadOnlyCollection<ITool> tools)
+    public async Task<List<ChatMessage>> BuildMessagesAsync(
+        IReadOnlyList<ChatMessage> conversation,
+        IReadOnlyList<ITool> tools)
+    {
+        var messages = new List<ChatMessage>();
+
+        messages.Add(new ChatMessage
+        {
+            Role = "system",
+            Content = await BuildSystemPrompt(tools)
+        });
+
+        messages.AddRange(conversation);
+
+        return messages;
+    }
+
+    private async Task<string> BuildSystemPrompt(
+        IReadOnlyList<ITool> tools)
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine(
-            "You are an AI agent.");
+        builder.AppendLine("You are an AI Planning Agent.");
 
         builder.AppendLine();
 
-        builder.AppendLine(
-            "Your task is ONLY to decide whether a tool should be used.");
+        builder.AppendLine("Your responsibility is to decide ONLY the next action.");
 
         builder.AppendLine();
 
-        builder.AppendLine(
-            "Available tools:");
+        builder.AppendLine("The conversation already contains:");
+
+        builder.AppendLine("- User requests");
+
+        builder.AppendLine("- Previous tool executions");
+
+        builder.AppendLine("- Previous tool results");
+
+        builder.AppendLine();
+
+        builder.AppendLine("You may execute multiple tools.");
+
+        builder.AppendLine();
+
+        builder.AppendLine("Never execute the same tool with the same arguments twice unless it is absolutely necessary.");
+
+        builder.AppendLine();
+
+        builder.AppendLine("If another tool is required return:");
+
+        builder.AppendLine();
+
+        builder.AppendLine("{");
+
+        builder.AppendLine("  \"action\":\"Tool\",");
+
+        builder.AppendLine("  \"tool\":\"tool-name\",");
+
+        builder.AppendLine("  \"arguments\":\"tool arguments\"");
+
+        builder.AppendLine("}");
+
+        builder.AppendLine();
+
+        builder.AppendLine("If enough information has been gathered return:");
+
+        builder.AppendLine();
+
+        builder.AppendLine("{");
+
+        builder.AppendLine("  \"action\":\"Answer\",");
+
+        builder.AppendLine("  \"tool\":null,");
+
+        builder.AppendLine("  \"arguments\":null");
+
+        builder.AppendLine("}");
+
+        builder.AppendLine();
+
+        builder.AppendLine("Return ONLY the JSON object.");
+
+        builder.AppendLine();
+
+        builder.AppendLine("Available tools:");
 
         builder.AppendLine();
 
         foreach (var tool in tools)
         {
-            builder.AppendLine($"Name: {tool.Name}");
+            builder.AppendLine($"- {tool.Name}");
 
-            builder.AppendLine($"Description: {tool.Description}");
+            builder.AppendLine($"  {tool.Description}");
+
+            var context = await tool.GetContextAsync();
+
+            if (!string.IsNullOrWhiteSpace(context))
+            {
+                builder.AppendLine();
+
+                builder.AppendLine("Context:");
+
+                builder.AppendLine(context);
+            }
 
             builder.AppendLine();
         }
-
-        builder.AppendLine(
-            "If no tool is needed respond exactly with:");
-
-        builder.AppendLine();
-
-        builder.AppendLine("NONE");
-
-        builder.AppendLine();
-
-        builder.AppendLine(
-            "Otherwise respond ONLY with valid JSON in this format:");
-
-        builder.AppendLine();
-
-        builder.AppendLine(
-@"{
-  ""tool"":""calculator"",
-  ""arguments"":""25*17""
-}");
-
-        builder.AppendLine();
-
-        builder.AppendLine(
-            $"User Question: {question}");
-
-        return builder.ToString();
-    }
-
-    public string BuildResultPrompt(
-        string question,
-        string toolName,
-        ToolExecutionResult toolResult)
-    {
-        var builder = new StringBuilder();
-
-        builder.AppendLine(
-            "You are an AI assistant.");
-
-        builder.AppendLine();
-
-        builder.AppendLine(
-            "A tool has already been executed successfully.");
-
-        builder.AppendLine();
-
-        builder.AppendLine(
-            "Generate the final answer for the user.");
-
-        builder.AppendLine();
-
-        builder.AppendLine(
-            "Do not mention internal implementation details.");
-
-        builder.AppendLine();
-
-        builder.AppendLine(
-            "Do not say that you executed a tool unless the user explicitly asks.");
-
-        builder.AppendLine();
-
-        builder.AppendLine(
-            "Use the tool result as the source of truth.");
-
-        builder.AppendLine();
-
-        builder.AppendLine("User Question:");
-
-        builder.AppendLine(question);
-
-        builder.AppendLine();
-
-        builder.AppendLine("Tool:");
-
-        builder.AppendLine(toolName);
-
-        builder.AppendLine();
-
-        builder.AppendLine("Tool Result:");
-
-        builder.AppendLine(toolResult.Content);
-
-        builder.AppendLine();
-
-        builder.AppendLine(
-            "Generate the final answer.");
 
         return builder.ToString();
     }

@@ -4,26 +4,17 @@ namespace PersonalAiAssistant.Services;
 
 public class AssistantService
 {
-    private readonly ToolAgentService _toolAgentService;
-    private readonly RagService _ragService;
+    private readonly AgentService _agentService;
 
     public AssistantService(
-        ToolAgentService toolAgentService,
-        RagService ragService)
+       AgentService agentService)
     {
-        _toolAgentService = toolAgentService;
-        _ragService = ragService;
+        _agentService = agentService;
     }
 
     public async Task<ChatResponse> AskAsync(
         string question)
     {
-        var toolResponse =
-            await _toolAgentService.TryHandleAsync(question);
-
-        if (toolResponse != null)
-            return toolResponse;
-
-        return await _ragService.AskAsync(question);
+        return await _agentService.AskAsync(question);
     }
 }

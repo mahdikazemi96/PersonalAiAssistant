@@ -17,7 +17,10 @@ public class WeatherTool : ITool
 
     public string Description =>
         "Gets the current weather of a city.";
-
+    public Task<string?> GetContextAsync()
+    {
+        return Task.FromResult<string?>(null);
+    }
     public async Task<ToolExecutionResult> ExecuteAsync(
         string arguments)
     {

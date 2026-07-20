@@ -17,7 +17,10 @@ public class FileSystemTool : ITool
 
     public string Description =>
         "Reads the content of a file inside the workspace.";
-
+    public Task<string?> GetContextAsync()
+    {
+        return Task.FromResult<string?>(null);
+    }
     public async Task<ToolExecutionResult> ExecuteAsync(
         string arguments)
     {
