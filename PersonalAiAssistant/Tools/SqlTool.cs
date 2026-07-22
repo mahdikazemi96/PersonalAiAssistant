@@ -6,18 +6,27 @@ namespace PersonalAiAssistant.Tools;
 public class SqlTool : ITool
 {
     private readonly ISqlToolService _sqlToolService;
+    private readonly IDatabaseSchemaReader _schemaReader;
 
     public SqlTool(
-        ISqlToolService sqlToolService)
+        ISqlToolService sqlToolService,
+        IDatabaseSchemaReader schemaReader)
     {
         _sqlToolService = sqlToolService;
+        _schemaReader = schemaReader;
     }
 
     public string Name => "sql";
 
     public string Description =>
         "Execute read-only SQL queries against SQL Server.";
+    public async Task<string?> GetContextAsync()
+    {
+        var schema =
+            await _schemaReader.ReadAsync();
 
+        return DatabaseSchemaFormatter.Format(schema);
+    }
     public async Task<ToolExecutionResult> ExecuteAsync(
         string arguments)
     {

@@ -9,7 +9,10 @@ public class CalculatorTool : ITool
 
     public string Description =>
         "Evaluates simple mathematical expressions.";
-
+    public Task<string?> GetContextAsync()
+    {
+        return Task.FromResult<string?>(null);
+    }
     public Task<ToolExecutionResult> ExecuteAsync(
         string arguments)
     {
