@@ -1,6 +1,7 @@
-﻿using System.Text.Json;
-using PersonalAiAssistant.Clients;
+﻿using PersonalAiAssistant.Clients;
 using PersonalAiAssistant.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PersonalAiAssistant.Services;
 
@@ -48,13 +49,17 @@ public class PlannerService
         AgentAction? action;
 
         try
-            {
+        {
             action =
                 JsonSerializer.Deserialize<AgentAction>(
                     response,
                     new JsonSerializerOptions
                     {
-                        PropertyNameCaseInsensitive = true
+                        PropertyNameCaseInsensitive = true,
+                        Converters =
+                        {
+                            new JsonStringEnumConverter()
+                        }
                     });
         }
         catch
