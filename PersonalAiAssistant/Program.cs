@@ -64,10 +64,14 @@ builder.Services.AddSingleton<ITool, WeatherTool>();
 
 builder.Services.AddSingleton<ITool, SqlTool>();
 
+builder.Services.AddSingleton<ISolutionAnalyzerService, SolutionAnalyzerService>();
+
+builder.Services.AddSingleton<ITool, SolutionAnalyzerTool>();
+
 builder.Services.AddHttpClient<IChatClient, LmStudioChatClient>(client =>
 {
     client.BaseAddress = new Uri("http://127.0.0.1:1234");
-    client.Timeout = TimeSpan.FromMinutes(2);
+    client.Timeout = TimeSpan.FromMinutes(5);
 });
 
 builder.Services.AddHttpClient<IEmbeddingClient, LmStudioEmbeddingClient>(client =>

@@ -1,0 +1,14 @@
+﻿namespace PersonalAiAssistant.Models;
+
+public class ProjectInfo
+{
+    public string Name { get; set; } = string.Empty;
+
+    public string Path { get; set; } = string.Empty;
+
+    public List<FolderInfo> Folders { get; } =
+        new();
+
+    public List<SourceFileInfo> Files { get; } =
+        new();
+}
