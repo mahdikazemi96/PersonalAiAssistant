@@ -1,28 +1,24 @@
-﻿using System.Text.Json;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.SqlClient;
 using PersonalAiAssistant.Clients;
 using PersonalAiAssistant.Models;
+using System.Text.Json;
 
 namespace PersonalAiAssistant.Services;
 
 public class SqlToolService : ISqlToolService
 {
     private readonly IChatClient _chatClient;
-    private readonly IDatabaseSchemaReader _schemaReader;
-    private readonly SqlPromptBuilder _promptBuilder;
+    private readonly IPromptBuilder _promptBuilder;
     private readonly SqlValidator _validator;
     private readonly string _connectionString;
 
     public SqlToolService(
         IChatClient chatClient,
-        IDatabaseSchemaReader schemaReader,
-        SqlPromptBuilder promptBuilder,
+        [FromKeyedServices("SqlPromptBuilder")] IPromptBuilder promptBuilder,
         SqlValidator validator,
         IConfiguration configuration)
     {
         _chatClient = chatClient;
-        _schemaReader = schemaReader;
         _promptBuilder = promptBuilder;
         _validator = validator;
 
@@ -36,20 +32,17 @@ public class SqlToolService : ISqlToolService
         string userQuestion)
     {
         //-------------------------------------------------
-        // Read database schema
-        //-------------------------------------------------
-
-        var schema =
-            await _schemaReader.ReadAsync();
-
-        //-------------------------------------------------
         // Build prompt
         //-------------------------------------------------
 
         var prompt =
-            _promptBuilder.Build(
-                userQuestion,
-                schema);
+            await _promptBuilder.BuildAsync();
+
+        //------------------------------------
+        // User Question
+        //------------------------------------
+
+        prompt = string.Join(Environment.NewLine, prompt, "User Question:", Environment.NewLine, userQuestion);
 
         //-------------------------------------------------
         // Ask LLM

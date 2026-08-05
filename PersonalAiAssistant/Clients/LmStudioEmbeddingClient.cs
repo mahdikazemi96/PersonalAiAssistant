@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Json;
-using PersonalAiAssistant.OpenAi;
+﻿using PersonalAiAssistant.OpenAi;
 
 namespace PersonalAiAssistant.Clients;
 

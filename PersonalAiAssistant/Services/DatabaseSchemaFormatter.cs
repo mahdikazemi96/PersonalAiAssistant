@@ -1,5 +1,5 @@
-﻿using System.Text;
-using PersonalAiAssistant.Models;
+﻿using PersonalAiAssistant.Models;
+using System.Text;
 
 namespace PersonalAiAssistant.Services;
 

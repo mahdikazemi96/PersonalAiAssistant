@@ -1,84 +1,34 @@
 ﻿using System.Text;
-using PersonalAiAssistant.Models;
 
 namespace PersonalAiAssistant.Services;
 
-public class SqlPromptBuilder
+public class SqlPromptBuilder : IPromptBuilder
 {
-    public string Build(
-        string question,
-        DatabaseSchema schema)
+    private readonly IPromptLoader _promptLoader;
+    private readonly IDatabaseSchemaReader _schemaReader;
+    public SqlPromptBuilder(IPromptLoader promptLoader, IDatabaseSchemaReader schemaReader)
     {
-        var builder = new StringBuilder();
+        _promptLoader = promptLoader;
+        _schemaReader = schemaReader;
+    }
 
-        //------------------------------------
-        // Role
-        //------------------------------------
+    public async Task<string> BuildAsync()
+    {
+        //----------------------------------------------------
+        // Main Prmpt
+        //----------------------------------------------------
 
-        builder.AppendLine(
-            "You are an expert SQL Server developer.");
+        var prompt = _promptLoader.Load("SqlSystem.txt");
 
-        builder.AppendLine();
-
-        builder.AppendLine(
-            "Generate a SQL Server query.");
-
-        builder.AppendLine();
-
-        //------------------------------------
-        // Rules
-        //------------------------------------
-
-        builder.AppendLine(
-            "Rules:");
-
-        builder.AppendLine(
-            "- Generate a SQL Server SELECT statement.");
-
-        builder.AppendLine(
-            "- Return a normal SELECT statement only.");
-
-        builder.AppendLine(
-            "- Generate ONLY one query.");
-
-        builder.AppendLine(
-            "- Use only SELECT statements.");
-
-        builder.AppendLine(
-            "- Never generate INSERT.");
-
-        builder.AppendLine(
-            "- Never generate UPDATE.");
-
-        builder.AppendLine(
-            "- Never generate DELETE.");
-
-        builder.AppendLine(
-            "- Never generate DROP.");
-
-        builder.AppendLine(
-            "- Never generate ALTER.");
-
-        builder.AppendLine(
-            "- Never generate CREATE.");
-
-        builder.AppendLine(
-            "- Never generate EXEC.");
-
-        builder.AppendLine(
-            "- Never use FOR JSON.");
-
-        builder.AppendLine(
-            "- Never use FOR XML.");
-
-        builder.AppendLine(
-            "- Use only tables and columns from the schema below.");
+        var builder = new StringBuilder(prompt);
 
         builder.AppendLine();
 
         //------------------------------------
         // Schema
         //------------------------------------
+
+        var schema = await _schemaReader.ReadAsync();
 
         builder.AppendLine(
             "Database Schema:");
@@ -98,15 +48,6 @@ public class SqlPromptBuilder
 
             builder.AppendLine();
         }
-
-        //------------------------------------
-        // User Question
-        //------------------------------------
-
-        builder.AppendLine(
-            "User Question:");
-
-        builder.AppendLine(question);
 
         return builder.ToString();
     }

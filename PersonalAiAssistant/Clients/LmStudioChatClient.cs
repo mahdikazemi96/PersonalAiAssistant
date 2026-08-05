@@ -2,7 +2,6 @@
 using PersonalAiAssistant.Models;
 using PersonalAiAssistant.Models.Llm;
 using PersonalAiAssistant.OpenAi;
-using System.Net.Http.Json;
 
 namespace PersonalAiAssistant.Clients;
 
@@ -20,7 +19,7 @@ public class LmStudioChatClient : IChatClient
     }
 
     public async Task<string> ChatAsync(
-        List<ChatMessage> messages,
+        IEnumerable<ChatMessage> messages,
         ResponseFormat? responseFormat = null)
     {
         var request = new ChatCompletionRequest

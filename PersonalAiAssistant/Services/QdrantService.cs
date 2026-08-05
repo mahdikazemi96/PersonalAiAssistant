@@ -1,8 +1,6 @@
-﻿using System.Net;
-using System.Net.Http.Json;
+﻿using PersonalAiAssistant.Qdrant;
+using System.Net;
 using System.Text.Json;
-using PersonalAiAssistant.Models;
-using PersonalAiAssistant.Qdrant;
 
 namespace PersonalAiAssistant.Services;
 

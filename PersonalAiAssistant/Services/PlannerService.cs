@@ -1,5 +1,6 @@
 ﻿using PersonalAiAssistant.Clients;
 using PersonalAiAssistant.Models;
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -7,52 +8,50 @@ namespace PersonalAiAssistant.Services;
 
 public class PlannerService
 {
-    private readonly ToolAgentPromptBuilder _promptBuilder;
-    private readonly ToolRouter _toolRouter;
     private readonly IChatClient _chatClient;
 
     public PlannerService(
-        ToolAgentPromptBuilder promptBuilder,
-        ToolRouter toolRouter,
         IChatClient chatClient)
     {
-        _promptBuilder = promptBuilder;
-        _toolRouter = toolRouter;
         _chatClient = chatClient;
     }
 
     public async Task<AgentAction> PlanAsync(
-        AgentContext context)
+        IEnumerable<ChatMessage> conversation)
     {
-        //------------------------------------------
-        // Build Prompt
-        //------------------------------------------
-
-        var messages =
-            await _promptBuilder.BuildMessagesAsync(
-                context.Conversation,
-                _toolRouter.GetTools().ToList());
-
         //------------------------------------------
         // Ask LLM
         //------------------------------------------
 
         var response =
             await _chatClient.ChatAsync(
-                messages,
+                conversation,
                 AgentAction.ResponseFormat);
 
         //------------------------------------------
         // Deserialize
         //------------------------------------------
 
+        var deserializedAction = Desrialize(response);
+
+        //------------------------------------------
+        // Invalid Response
+        //------------------------------------------
+
+        var action = HandleNullAction(deserializedAction);
+
+        return action;
+    }
+
+    private AgentAction Desrialize(string obj)
+    {
         AgentAction? action;
 
         try
         {
             action =
                 JsonSerializer.Deserialize<AgentAction>(
-                    response,
+                    obj,
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true,
@@ -70,10 +69,11 @@ public class PlannerService
             };
         }
 
-        //------------------------------------------
-        // Invalid Response
-        //------------------------------------------
+        return action;
+    }
 
+    private AgentAction HandleNullAction(AgentAction action)
+    {
         if (action == null)
         {
             return new AgentAction

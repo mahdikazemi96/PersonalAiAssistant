@@ -14,15 +14,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ConversationService>();
 
-builder.Services.AddSingleton<PromptBuilder>();
-
-builder.Services.AddSingleton<HybridRankingService>();
-
 builder.Services.AddSingleton<TextChunker>();
 
-builder.Services.AddScoped<AnswerGenerationService>();
+builder.Services.AddSingleton<AnswerGenerationService>();
 
-builder.Services.AddScoped<DocumentService>();
+builder.Services.AddSingleton<DocumentService>();
 
 builder.Services.AddSingleton<DocumentReaderFactory>();
 
@@ -44,17 +40,17 @@ builder.Services.AddSingleton<ITool, CalculatorTool>();
 
 builder.Services.AddSingleton<ToolRouter>();
 
-builder.Services.AddScoped<AssistantService>();
+builder.Services.AddSingleton<AssistantService>();
 
-builder.Services.AddScoped<PlannerService>();
+builder.Services.AddSingleton<PlannerService>();
 
-builder.Services.AddScoped<AgentService>();
+builder.Services.AddSingleton<AssistantService>();
 
-builder.Services.AddScoped<ToolExecutionService>();
+builder.Services.AddSingleton<ToolExecutionService>();
 
-builder.Services.AddSingleton<ToolAgentPromptBuilder>();
+builder.Services.AddKeyedSingleton<IPromptBuilder, ToolAgentPromptBuilder>("ToolAgentPromptBuilder");
 
-builder.Services.AddSingleton<SqlPromptBuilder>();
+builder.Services.AddKeyedSingleton<IPromptBuilder, SqlPromptBuilder>("SqlPromptBuilder");
 
 builder.Services.AddSingleton<ISafeFileSystemService, SafeFileSystemService>();
 
@@ -67,6 +63,8 @@ builder.Services.AddSingleton<ITool, SqlTool>();
 builder.Services.AddSingleton<ISolutionAnalyzerService, SolutionAnalyzerService>();
 
 builder.Services.AddSingleton<ITool, SolutionAnalyzerTool>();
+
+builder.Services.AddSingleton<IPromptLoader, PromptLoader>();
 
 builder.Services.AddHttpClient<IChatClient, LmStudioChatClient>(client =>
 {

@@ -15,46 +15,6 @@ public class SolutionAnalyzerService : ISolutionAnalyzerService
             ?? throw new InvalidOperationException(
                 "WorkspacePath is not configured.");
     }
-    public async Task<SolutionInfo> GetSolutionAsync()
-    {
-        //------------------------------------------
-        // Validation
-        //------------------------------------------
-
-        if (!Directory.Exists(_workspacePath))
-        {
-            throw new DirectoryNotFoundException(
-                _workspacePath);
-        }
-
-        //------------------------------------------
-        // Solution
-        //------------------------------------------
-
-        var solutionFile =
-            FindSolution();
-
-        var solution =
-            new SolutionInfo
-            {
-                Name = Path.GetFileNameWithoutExtension(
-                    solutionFile),
-
-                Path = solutionFile
-            };
-
-        //------------------------------------------
-        // Projects
-        //------------------------------------------
-
-        foreach (var projectFile in FindProjects())
-        {
-            solution.Projects.Add(
-                await LoadProjectAsync(projectFile));
-        }
-
-        return solution;
-    }
 
     public async Task<string> AnalyzeAsync()
     {
@@ -96,40 +56,49 @@ public class SolutionAnalyzerService : ISolutionAnalyzerService
 
         return builder.ToString();
     }
-
-    private string FindSolution()
+    public async Task<SolutionInfo> GetSolutionAsync()
     {
-        var solution =
-            Directory
-                .EnumerateFiles(
-                    _workspacePath,
-                    "*.sln",
-                    SearchOption.TopDirectoryOnly)
-                .FirstOrDefault();
+        //------------------------------------------
+        // Validation
+        //------------------------------------------
 
-        if (solution == null)
+        if (!Directory.Exists(_workspacePath))
         {
-            throw new InvalidOperationException(
-                "Solution file not found.");
+            throw new DirectoryNotFoundException(
+                _workspacePath);
+        }
+
+        //------------------------------------------
+        // Solution
+        //------------------------------------------
+
+        var solutionFile =
+            FindSolution();
+
+        var solution =
+            new SolutionInfo
+            {
+                Name = Path.GetFileNameWithoutExtension(
+                    solutionFile),
+
+                Path = solutionFile
+            };
+
+        //------------------------------------------
+        // Projects
+        //------------------------------------------
+
+        foreach (var projectFile in FindProjects())
+        {
+            solution.Projects.Add(
+                await LoadProjectAsync(projectFile));
         }
 
         return solution;
     }
 
-    private IReadOnlyList<string> FindProjects()
-    {
-        return Directory
-            .EnumerateFiles(
-                _workspacePath,
-                "*.csproj",
-                SearchOption.AllDirectories)
-            .OrderBy(Path.GetFileNameWithoutExtension)
-            .ToList();
-    }
 
-    private static void AppendProject(
-    StringBuilder builder,
-    ProjectInfo project)
+    private static void AppendProject(StringBuilder builder, ProjectInfo project)
     {
         builder.AppendLine(
             "----------------------------------------");
@@ -172,8 +141,36 @@ public class SolutionAnalyzerService : ISolutionAnalyzerService
 
         builder.AppendLine();
     }
-    private Task<ProjectInfo> LoadProjectAsync(
-    string projectFile)
+
+    private string FindSolution()
+    {
+        var solution =
+            Directory
+                .EnumerateFiles(
+                    _workspacePath,
+                    "*.sln",
+                    SearchOption.TopDirectoryOnly)
+                .FirstOrDefault();
+
+        if (solution == null)
+        {
+            throw new InvalidOperationException(
+                "Solution file not found.");
+        }
+
+        return solution;
+    }
+    private IReadOnlyList<string> FindProjects()
+    {
+        return Directory
+            .EnumerateFiles(
+                _workspacePath,
+                "*.csproj",
+                SearchOption.AllDirectories)
+            .OrderBy(Path.GetFileNameWithoutExtension)
+            .ToList();
+    }
+    private Task<ProjectInfo> LoadProjectAsync(string projectFile)
     {
         var projectDirectory =
             Path.GetDirectoryName(projectFile)!;
@@ -222,8 +219,7 @@ public class SolutionAnalyzerService : ISolutionAnalyzerService
 
         return Task.FromResult(project);
     }
-    private FolderInfo LoadFolder(
-    string folderPath)
+    private FolderInfo LoadFolder(string folderPath)
     {
         var folder =
             new FolderInfo

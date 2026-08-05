@@ -1,5 +1,5 @@
 ﻿using PersonalAiAssistant.Models.Llm;
-using PersonalAiAssistant.Tools;
+using System.Text;
 
 namespace PersonalAiAssistant.Models;
 
@@ -73,4 +73,48 @@ public class AgentAction
                 }
             }
         };
+}
+
+public class AgentActionMessageHelper
+{
+    public static string BuildToolCallMessage(AgentAction action)
+    {
+        var builder = new StringBuilder();
+
+        builder.AppendLine("Tool Executed");
+
+        builder.AppendLine();
+
+        builder.AppendLine($"Tool: {action.Tool}");
+
+        if (!string.IsNullOrWhiteSpace(action.Arguments))
+        {
+            builder.AppendLine();
+
+            builder.AppendLine("Arguments:");
+
+            builder.AppendLine(action.Arguments);
+        }
+
+        return builder.ToString();
+    }
+
+    public static string BuildToolResultMessage(
+        string tool,
+        string result)
+    {
+        var builder = new StringBuilder();
+
+        builder.AppendLine("Tool Result");
+
+        builder.AppendLine();
+
+        builder.AppendLine($"Tool: {tool}");
+
+        builder.AppendLine();
+
+        builder.AppendLine(result);
+
+        return builder.ToString();
+    }
 }

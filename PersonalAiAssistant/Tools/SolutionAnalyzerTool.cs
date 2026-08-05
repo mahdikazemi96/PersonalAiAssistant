@@ -15,11 +15,9 @@ public class SolutionAnalyzerTool : ITool
             solutionAnalyzerService;
     }
 
-    public string Name =>
-        "solution";
+    public string Name => "solution";
 
-    public string Description =>
-        "Analyzes the current solution structure.";
+    public string Description => "Analyzes the current solution structure.";
 
     public Task<string?> GetContextAsync()
     {

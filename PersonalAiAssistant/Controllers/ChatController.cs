@@ -25,11 +25,7 @@ public class ChatController : ControllerBase
         var answer =
             await _assistantService.AskAsync(request.Message);
 
-        return Ok(new ChatResponse
-        {
-            Answer = answer.Answer,
-            Sources = answer.Sources
-        });
+        return Ok(answer);
     }
 
     [HttpDelete("history")]

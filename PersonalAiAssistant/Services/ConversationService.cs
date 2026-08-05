@@ -1,36 +1,46 @@
-﻿using PersonalAiAssistant.Models;
-
-namespace PersonalAiAssistant.Services;
+﻿namespace PersonalAiAssistant.Services;
 
 public class ConversationService
 {
-    private readonly List<ChatMessage> _messages = new();
+    public IReadOnlyList<ChatMessage> Conversation => _conversation;
 
+    private readonly List<ChatMessage> _conversation = new();
+
+    public void AddSystemMessage(string message)
+    {
+        _conversation.Add(new ChatMessage
+        {
+            Role = "system",
+            Content = message
+        });
+    }
     public void AddUserMessage(string message)
     {
-        _messages.Add(new ChatMessage
+        _conversation.Add(new ChatMessage
         {
             Role = "user",
             Content = message
         });
     }
-
     public void AddAssistantMessage(string message)
     {
-        _messages.Add(new ChatMessage
+        _conversation.Add(new ChatMessage
         {
             Role = "assistant",
             Content = message
         });
     }
-
-    public List<ChatMessage> GetMessages()
+    public void AddToolMessage(string message)
     {
-        return _messages.ToList();
+        _conversation.Add(new ChatMessage
+        {
+            Role = "tool",
+            Content = message
+        });
     }
 
     public void Clear()
     {
-        _messages.RemoveRange(1, _messages.Count - 1);
+        _conversation.RemoveRange(1, _conversation.Count - 1);
     }
 }

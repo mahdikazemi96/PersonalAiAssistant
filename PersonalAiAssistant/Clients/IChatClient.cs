@@ -1,11 +1,10 @@
-﻿using PersonalAiAssistant.Models;
-using PersonalAiAssistant.Models.Llm;
+﻿using PersonalAiAssistant.Models.Llm;
 
 namespace PersonalAiAssistant.Clients;
 
 public interface IChatClient
 {
     Task<string> ChatAsync(
-        List<ChatMessage> messages,
+        IEnumerable<ChatMessage> messages,
         ResponseFormat? responseFormat = null);
 }

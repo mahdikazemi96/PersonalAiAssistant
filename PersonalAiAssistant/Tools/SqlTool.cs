@@ -1,19 +1,17 @@
 ﻿using PersonalAiAssistant.Models;
 using PersonalAiAssistant.Services;
+using System.Text;
 
 namespace PersonalAiAssistant.Tools;
 
 public class SqlTool : ITool
 {
     private readonly ISqlToolService _sqlToolService;
-    private readonly IDatabaseSchemaReader _schemaReader;
 
     public SqlTool(
-        ISqlToolService sqlToolService,
-        IDatabaseSchemaReader schemaReader)
+        ISqlToolService sqlToolService)
     {
         _sqlToolService = sqlToolService;
-        _schemaReader = schemaReader;
     }
 
     public string Name => "sql";
@@ -22,10 +20,13 @@ public class SqlTool : ITool
         "Execute read-only SQL queries against SQL Server.";
     public async Task<string?> GetContextAsync()
     {
-        var schema =
-            await _schemaReader.ReadAsync();
-
-        return DatabaseSchemaFormatter.Format(schema);
+        var context = new StringBuilder();
+        context.Append("A database for an e-commerce shop.");
+        context.AppendLine();
+        context.Append("This database stroes data about the shop Customers, Products, Orders.");
+        context.AppendLine();
+        context.Append("Answering to any question about Customers, Products or Orders, will need to this Tool.");
+        return context.ToString();
     }
     public async Task<ToolExecutionResult> ExecuteAsync(
         string arguments)

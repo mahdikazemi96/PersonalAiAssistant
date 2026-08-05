@@ -1,6 +1,4 @@
-﻿using PersonalAiAssistant.Models;
-
-namespace PersonalAiAssistant.Services;
+﻿namespace PersonalAiAssistant.Services;
 
 public interface ISolutionAnalyzerService
 {

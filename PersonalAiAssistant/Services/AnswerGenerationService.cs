@@ -14,7 +14,7 @@ public class AnswerGenerationService
     }
 
     public async Task<ChatResponse> GenerateAsync(
-        AgentContext context)
+        IEnumerable<ChatMessage> conversation)
     {
         //------------------------------------------
         // Ask LLM
@@ -22,7 +22,7 @@ public class AnswerGenerationService
 
         var answer =
             await _chatClient.ChatAsync(
-                context.Conversation);
+                conversation);
 
         //------------------------------------------
         // Response
