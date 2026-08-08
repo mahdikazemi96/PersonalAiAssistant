@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.AgentTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.Contracts", "PersonalAiAssistant.Contracts\PersonalAiAssistant.Contracts.csproj", "{EBDCFE31-6F8E-44BB-87F6-B66AAC7E9296}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AgentToolModules", "AgentToolModules", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FEBEEF21-A001-433F-947D-B2A4A7A21881} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{58F523DC-0D06-419D-BCF2-6EB7F82DAC0C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C4D89006-7486-4558-B0F6-4AC130E224C6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{953C7ED3-7737-4A59-959C-443130F45277} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{77266601-5ADB-4E28-A27C-4CB330FA9A48} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D62BA81F-E8C5-40B4-BEE3-9F7A82BBD5CA}
