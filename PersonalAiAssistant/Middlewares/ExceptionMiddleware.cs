@@ -1,6 +1,10 @@
-﻿using PersonalAiAssistant.Models;
+﻿using Microsoft.AspNetCore.Http;
+using PersonalAiAssistant.Models;
+using System;
 using System.Net;
+using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace PersonalAiAssistant.Middlewares;
 
