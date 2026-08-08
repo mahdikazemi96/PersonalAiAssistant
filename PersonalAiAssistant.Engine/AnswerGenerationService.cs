@@ -17,12 +17,19 @@ namespace PersonalAiAssistant.Engine
             IEnumerable<ChatMessage> conversation)
         {
             //------------------------------------------
+            // Prepare Context To LLM Generate Just Answer
+            //------------------------------------------
+
+            var requestContext = new List<ChatMessage>();
+            requestContext = conversation.Where(c => c.Role != "system").ToList();
+
+            //------------------------------------------
             // Ask LLM
             //------------------------------------------
 
             var answer =
                 await _chatClient.ChatAsync(
-                    conversation);
+                    requestContext);
 
             //------------------------------------------
             // Response
