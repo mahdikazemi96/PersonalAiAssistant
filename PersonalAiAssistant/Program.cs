@@ -25,9 +25,9 @@ builder.Services.AddEngine(configuration);
 builder.Services.AddAgentTool(configuration);
 builder.Services.AddCalculatorTool(configuration);
 builder.Services.AddReadFileTool(configuration);
-builder.Services.AddSolutionAnalyzerTool(configuration);
 builder.Services.AddWeatherTool(configuration);
 builder.Services.AddSqlTool(configuration);
+builder.Services.AddSolutionAnalyzerTool(configuration);
 
 var app = builder.Build();
 
