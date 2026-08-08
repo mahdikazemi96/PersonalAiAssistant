@@ -15,11 +15,9 @@ namespace PersonalAiAssistant.Infrastructure.Services.Prompts
 
         public string Load(string promptName)
         {
-            var path =
-                Path.Combine(
-                    _environment.ContentRootPath,
-                    "Prompts/",
-                    promptName);
+            string baseDir = AppContext.BaseDirectory;
+
+            string path = Path.Combine(baseDir, "Prompts", promptName);
 
             return File.ReadAllText(path);
         }

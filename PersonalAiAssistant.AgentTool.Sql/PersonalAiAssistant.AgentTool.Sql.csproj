@@ -12,4 +12,10 @@
     <ProjectReference Include="..\PersonalAiAssistant.AgentTool\PersonalAiAssistant.AgentTool.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Prompts\SqlSystem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

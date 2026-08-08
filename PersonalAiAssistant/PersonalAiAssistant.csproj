@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Prompts\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PersonalAiAssistant.AgentTool.Calculator\PersonalAiAssistant.AgentTool.Calculator.csproj" />
     <ProjectReference Include="..\PersonalAiAssistant.AgentTool.ReadFile\PersonalAiAssistant.AgentTool.ReadFile.csproj" />
     <ProjectReference Include="..\PersonalAiAssistant.AgentTool.SolutionAnalyzer\PersonalAiAssistant.AgentTool.SolutionAnalyzer.csproj" />

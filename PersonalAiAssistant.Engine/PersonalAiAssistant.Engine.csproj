@@ -17,4 +17,13 @@
     <ProjectReference Include="..\PersonalAiAssistant.Infrastructure\PersonalAiAssistant.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Prompts\PlannerSystem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Prompts\PlannerSystemExamples.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
