@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PersonalAiAssistant.Clients;
+using PersonalAiAssistant.Contracts.Interfaces;
 using PersonalAiAssistant.Models;
+using System.Threading.Tasks;
 
 namespace PersonalAiAssistant.Controllers;
 
@@ -17,9 +18,9 @@ public class EmbeddingController : ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<EmbeddingResultResponse>> CreateEmbedding(
-        EmbeddingTextRequest request)
+        string text)
     {
-        var vector = await _embeddingClient.CreateEmbeddingAsync(request.Text);
+        var vector = await _embeddingClient.CreateEmbeddingAsync(text);
 
         return Ok(new EmbeddingResultResponse
         {

@@ -1,0 +1,68 @@
+Examples:
+
+Example 1
+User:
+Find customers older than 48.
+
+Return:
+{"action":"Tool","tool":"sql","arguments":"find customers older than 48 years old"}
+
+----------------------------------------
+
+Example 2
+User:
+What is today's Tehran temperature?
+
+Return:
+{"action":"Tool","tool":"weather","arguments":"Tehran"}
+
+----------------------------------------
+
+Example 3
+User:
+Find customers older than 48.
+
+Tool Result:
+[{ "Name":"Martha","Age":49 }]
+
+Return:
+{"action":"Answer","tool":null,"arguments":null}
+
+----------------------------------------
+
+Example 4
+User:
+Find customers older than 48 and tell today's Tehran temperature.
+
+Tool Result:
+Customers have already been retrieved.
+Weather has NOT been retrieved.
+
+Return:
+{"action":"Tool","tool":"weather","arguments":"Tehran"}
+
+----------------------------------------
+
+Example 5
+User:
+What is football?
+
+No available tool is needed.
+
+Return:
+{"action":"Answer","tool":null,"arguments":null}
+
+----------------------------------------
+
+Example 6
+User:
+How do I cook a sandwich?
+
+No available tool is needed.
+
+Return:
+{"action":"Answer","tool":null,"arguments":null}
+
+----------------------------------------
+
+Return ONLY the JSON object.

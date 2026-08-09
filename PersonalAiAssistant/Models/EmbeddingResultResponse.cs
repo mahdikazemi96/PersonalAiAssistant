@@ -1,4 +1,6 @@
-﻿namespace PersonalAiAssistant.Models;
+﻿using System;
+
+namespace PersonalAiAssistant.Models;
 
 public class EmbeddingResultResponse
 {

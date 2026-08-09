@@ -1,9 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant", "PersonalAiAssistant\PersonalAiAssistant.csproj", "{9C158783-4B8F-4550-8646-0E0E4C17B3A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.Engine", "PersonalAiAssistant.Engine\PersonalAiAssistant.Engine.csproj", "{D3547998-71A9-4AD4-9DCF-F66DF0086767}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.Infrastructure", "PersonalAiAssistant.Infrastructure\PersonalAiAssistant.Infrastructure.csproj", "{1C9A03AF-5214-49ED-9851-D2F35745CDF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.AgentTool", "PersonalAiAssistant.AgentTool\PersonalAiAssistant.AgentTool.csproj", "{24AB006D-A691-45B3-8291-0700188AE941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.AgentTool.Sql", "PersonalAiAssistant.AgentTool.Sql\PersonalAiAssistant.AgentTool.Sql.csproj", "{FEBEEF21-A001-433F-947D-B2A4A7A21881}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.AgentTool.Weather", "PersonalAiAssistant.AgentTool.Weather\PersonalAiAssistant.AgentTool.Weather.csproj", "{58F523DC-0D06-419D-BCF2-6EB7F82DAC0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.AgentTool.Calculator", "PersonalAiAssistant.AgentTool.Calculator\PersonalAiAssistant.AgentTool.Calculator.csproj", "{C4D89006-7486-4558-B0F6-4AC130E224C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.AgentTool.ReadFile", "PersonalAiAssistant.AgentTool.ReadFile\PersonalAiAssistant.AgentTool.ReadFile.csproj", "{953C7ED3-7737-4A59-959C-443130F45277}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.AgentTool.SolutionAnalyzer", "PersonalAiAssistant.AgentTool.SolutionAnalyzer\PersonalAiAssistant.AgentTool.SolutionAnalyzer.csproj", "{77266601-5ADB-4E28-A27C-4CB330FA9A48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalAiAssistant.Contracts", "PersonalAiAssistant.Contracts\PersonalAiAssistant.Contracts.csproj", "{EBDCFE31-6F8E-44BB-87F6-B66AAC7E9296}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AgentToolModules", "AgentToolModules", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +35,52 @@ Global
 		{9C158783-4B8F-4550-8646-0E0E4C17B3A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C158783-4B8F-4550-8646-0E0E4C17B3A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C158783-4B8F-4550-8646-0E0E4C17B3A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3547998-71A9-4AD4-9DCF-F66DF0086767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3547998-71A9-4AD4-9DCF-F66DF0086767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3547998-71A9-4AD4-9DCF-F66DF0086767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3547998-71A9-4AD4-9DCF-F66DF0086767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9A03AF-5214-49ED-9851-D2F35745CDF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9A03AF-5214-49ED-9851-D2F35745CDF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9A03AF-5214-49ED-9851-D2F35745CDF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9A03AF-5214-49ED-9851-D2F35745CDF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24AB006D-A691-45B3-8291-0700188AE941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24AB006D-A691-45B3-8291-0700188AE941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24AB006D-A691-45B3-8291-0700188AE941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24AB006D-A691-45B3-8291-0700188AE941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEBEEF21-A001-433F-947D-B2A4A7A21881}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEBEEF21-A001-433F-947D-B2A4A7A21881}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEBEEF21-A001-433F-947D-B2A4A7A21881}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEBEEF21-A001-433F-947D-B2A4A7A21881}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58F523DC-0D06-419D-BCF2-6EB7F82DAC0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58F523DC-0D06-419D-BCF2-6EB7F82DAC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58F523DC-0D06-419D-BCF2-6EB7F82DAC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58F523DC-0D06-419D-BCF2-6EB7F82DAC0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4D89006-7486-4558-B0F6-4AC130E224C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4D89006-7486-4558-B0F6-4AC130E224C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4D89006-7486-4558-B0F6-4AC130E224C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4D89006-7486-4558-B0F6-4AC130E224C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{953C7ED3-7737-4A59-959C-443130F45277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{953C7ED3-7737-4A59-959C-443130F45277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{953C7ED3-7737-4A59-959C-443130F45277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{953C7ED3-7737-4A59-959C-443130F45277}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77266601-5ADB-4E28-A27C-4CB330FA9A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77266601-5ADB-4E28-A27C-4CB330FA9A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77266601-5ADB-4E28-A27C-4CB330FA9A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77266601-5ADB-4E28-A27C-4CB330FA9A48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBDCFE31-6F8E-44BB-87F6-B66AAC7E9296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBDCFE31-6F8E-44BB-87F6-B66AAC7E9296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBDCFE31-6F8E-44BB-87F6-B66AAC7E9296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBDCFE31-6F8E-44BB-87F6-B66AAC7E9296}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FEBEEF21-A001-433F-947D-B2A4A7A21881} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{58F523DC-0D06-419D-BCF2-6EB7F82DAC0C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C4D89006-7486-4558-B0F6-4AC130E224C6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{953C7ED3-7737-4A59-959C-443130F45277} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{77266601-5ADB-4E28-A27C-4CB330FA9A48} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D62BA81F-E8C5-40B4-BEE3-9F7A82BBD5CA}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PersonalAiAssistant.Models;
-using PersonalAiAssistant.Services;
+using PersonalAiAssistant.Contracts.Models;
+using PersonalAiAssistant.Engine;
+using System.Threading.Tasks;
 
 namespace PersonalAiAssistant.Controllers;
 
@@ -20,16 +21,12 @@ public class ChatController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ChatResponse>> Chat(ChatRequest request)
+    public async Task<ActionResult<ChatResponse>> Chat(string message)
     {
         var answer =
-            await _assistantService.AskAsync(request.Message);
+            await _assistantService.AskAsync(message);
 
-        return Ok(new ChatResponse
-        {
-            Answer = answer.Answer,
-            Sources = answer.Sources
-        });
+        return Ok(answer);
     }
 
     [HttpDelete("history")]
