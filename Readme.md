@@ -12,6 +12,7 @@
 
 ## Table of Contents
 * [About the repo](#about-the-repo)
+* [Some important concepts](#some-important-concepts)
 
 
 ## About The Repo
