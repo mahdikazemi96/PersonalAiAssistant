@@ -11,7 +11,7 @@
 ![Static Badge](https://img.shields.io/badge/plugable_style-white)
 
 ## Table of Contents
-* [About the repo](#about-repo)
+* [About the repo](#about-the-repo)
 
 
 ## About The Repo
