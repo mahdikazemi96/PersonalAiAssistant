@@ -26,3 +26,12 @@ where every developer can fetch the project, just write their tool, and add it t
 ## Some Important Concepts
 I want to explain some important concepts in the AI agents world, then start coding. 
 If you are a bit familiar with AI agents, you have probably heard about them. Understanding these concepts helps you design and develop AI agents more easily and better.
+
+```csharp
+public class UserService
+{
+    public void CreateUser()
+    {
+        // ...
+    }
+}
