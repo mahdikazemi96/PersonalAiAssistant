@@ -13,6 +13,8 @@
 ## Table of Contents
 * [About the repo](#about-the-repo)
 * [Some important concepts](#some-important-concepts)
+* [Embedding Model](#embedding-model)
+* [Vector Database](#vector-database)
 
 
 ## About The Repo
@@ -27,7 +29,7 @@ where every developer can fetch the project, just write their tool, and add it t
 I want to explain some important concepts in the AI agents world, then start coding. 
 If you are a bit familiar with AI agents, you have probably heard about them. Understanding these concepts helps you design and develop AI agents more easily and better.
 
-## Ebedding Model
+### Embedding Model
 An embedding model converts text into a vector, which is a collection of numerical values. 
 The values are not necessarily limited to a specific range and can also be negative.
 Forexample this is a vector of a text: [0.12, -0.43, 0.87, ...]
