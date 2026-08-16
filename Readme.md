@@ -27,11 +27,25 @@ where every developer can fetch the project, just write their tool, and add it t
 I want to explain some important concepts in the AI agents world, then start coding. 
 If you are a bit familiar with AI agents, you have probably heard about them. Understanding these concepts helps you design and develop AI agents more easily and better.
 
-```csharp
-public class UserService
-{
-    public void CreateUser()
-    {
-        // ...
-    }
-}
+## Ebedding Model
+An embedding model converts text into a vector, which is a collection of numerical values. 
+The values are not necessarily limited to a specific range and can also be negative.
+Forexample this is a vector of a text: [0.12, -0.43, 0.87, ...]
+
+An embedding model is trained to create numerical representations of the semantic characteristics of text. 
+During training, the model learns relationships between words, phrases, and their surrounding context from a large amount of text.
+
+When we give a piece of text to an embedding model, it generates a vector that represents the meaning and characteristics of that text. 
+Texts with similar meanings tend to produce vectors that are closer to each other in the vector space.
+
+### Vector Database
+A Vector Database is a type of database designed to store and efficiently search vectors based on their similarity.
+
+Typically, a vector is stored together with a payload containing information related to that vector, such as the original text, document name, or page number.
+
+When we want to search for relevant information, we first convert our target text into a vector using an embedding model. 
+We then send this vector to the Vector Database.
+
+The Vector Database compares the query vector with the stored vectors and finds the vectors that are most similar to it. 
+It then returns the matching vectors together with their associated payloads.
+
