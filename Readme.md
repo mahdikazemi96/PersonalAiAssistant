@@ -15,6 +15,7 @@
 * [Some important concepts](#some-important-concepts)
 * [Embedding Model](#embedding-model)
 * [Vector Database](#vector-database)
+* [RAG](#rag)
 
 
 ## About The Repo
@@ -50,4 +51,13 @@ We then send this vector to the Vector Database.
 
 The Vector Database compares the query vector with the stored vectors and finds the vectors that are most similar to it. 
 It then returns the matching vectors together with their associated payloads.
+
+### RAG
+RAG stands for Retrieval-Augmented Generation. RAG is a technique that allows an AI agent to use external knowledge without retraining or modifying its LLM.
+
+Every AI agent typically uses an LLM that has already been trained and has knowledge learned during its training. 
+However, the LLM doesn't automatically have access to our private documents or other external knowledge.
+
+RAG helps us build a system that stores our documents and, whenever we need to ask something about them, retrieves the appropriate parts of the documents. 
+These retrieved parts are then added to the context that we send to the LLM. The LLM can then generate an answer based on the retrieved information together with the knowledge it already has.
 
