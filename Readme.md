@@ -1,8 +1,3 @@
-<style>
-img {
-  vertical-align: text-top !important;
-}
-</style>
 # AI Agent With .Net 
 
 ![Static Badge](https://img.shields.io/badge/stack-.net_8-purple)
