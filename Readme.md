@@ -16,6 +16,7 @@
 * [Embedding Model](#embedding-model)
 * [Vector Database](#vector-database)
 * [RAG](#rag)
+* [Chunking] (#chunking)
 
 
 ## About The Repo
@@ -61,3 +62,16 @@ However, the LLM doesn't automatically have access to our private documents or o
 RAG helps us build a system that stores our documents and, whenever we need to ask something about them, retrieves the appropriate parts of the documents. 
 These retrieved parts are then added to the context that we send to the LLM. The LLM can then generate an answer based on the retrieved information together with the knowledge it already has.
 
+### Chunking
+Why do we need to chunk documents in RAG systems? In a typical RAG system, we first divide the document into smaller chunks, 
+then create an embedding for each chunk and store the vectors in a vector database.
+
+The goal is not to make the chunks as small as possible. Instead, we want each chunk to be small enough to allow precise semantic search 
+while still containing enough context to represent a meaningful piece of information.
+
+Imagine you have a 20-page PDF document and only one page defines the company's days-off policy. 
+If you save the entire PDF as a single piece, when the user asks about the days-off policy, 
+the retrieval system may return the entire document. The LLM would then receive much more information than it needs.
+
+However, if you chunk the PDF into 20 meaningful pieces, the retrieval system can find the chunk containing the days-off policy 
+and send only that relevant information to the LLM. This can reduce the number of tokens sent to the LLM, reduce costs, and potentially make the answer faster and more focused.
