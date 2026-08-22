@@ -18,6 +18,7 @@
 * [RAG](#rag)
 * [Chunking](#chunking)
 * [How do Embedding, Vector Databses and Chunking, work together in a RAG system?](#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
+* [LLM Tool Calling](#llm-tool-calling)
 
 
 ## About The Repo
@@ -88,3 +89,20 @@ Fourth, when a question arrives, the system sends the question to the embedding 
 It then sends this vector to the vector database, which searches for vectors that are semantically similar to the question and returns the corresponding relevant chunks.
 
 Finally, the system gives the original question together with the retrieved chunks to the LLM. The LLM uses the retrieved information, together with its pretrained knowledge, to generate the response.
+
+### LLM Tool Calling
+In a simple AI agent, the user sends a question to the agent, and the LLM generates an answer based on its pretrained knowledge. 
+However, there are situations where the LLM cannot directly perform an operation or access the required information.
+
+For example, if the user asks about tomorrow's weather, the LLM cannot know the actual forecast from its pretrained knowledge. It needs to call an external weather service.
+
+For these situations, we can provide the agent with tools. A tool is a function or service that the agent can call to perform a specific task or access external information. 
+For example, we can create tools for weather information, mathematical calculations, database queries, or calling external APIs.
+
+When the agent receives a question, the LLM is given the available tools and their descriptions. 
+The LLM determines whether it can answer the question using its own knowledge or whether it needs to call one of the available tools.
+
+If a tool is needed, the LLM generates a tool call with the required parameters. The agent executes the tool and receives its result. 
+The result is then provided back to the LLM, which uses it to generate the final answer.
+
+If no tool is needed, the LLM can answer directly.
