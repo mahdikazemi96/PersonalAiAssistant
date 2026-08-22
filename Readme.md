@@ -90,6 +90,21 @@ It then sends this vector to the vector database, which searches for vectors tha
 
 Finally, the system gives the original question together with the retrieved chunks to the LLM. The LLM uses the retrieved information, together with its pretrained knowledge, to generate the response.
 
+flowchart TD
+    A[Documents] --> B[Chunking]
+    B --> C[Embedding Model]
+    C --> D[Vectors]
+    D --> E[Vector Database<br/>Qdrant]
+
+    F[User Question] --> G[Embedding Model]
+    G --> H[Query Vector]
+    H --> E
+
+    E --> I[Relevant Chunks]
+    I --> J[Question + Retrieved Chunks]
+    J --> K[LLM]
+    K --> L[Final Answer]
+
 ### LLM Tool Calling
 In a simple AI agent, the user sends a question to the agent, and the LLM generates an answer based on its pretrained knowledge. 
 However, there are situations where the LLM cannot directly perform an operation or access the required information.
@@ -106,3 +121,19 @@ If a tool is needed, the LLM generates a tool call with the required parameters.
 The result is then provided back to the LLM, which uses it to generate the final answer.
 
 If no tool is needed, the LLM can answer directly.
+
+flowchart TD
+    A[User Question] --> B[LLM]
+
+    B --> C{Need a Tool?}
+
+    C -->|No| D[Generate Answer]
+    D --> E[Return Answer to User]
+
+    C -->|Yes| F[Generate Tool Call]
+    F --> G[Application Executes Tool]
+    G --> H[Tool Result]
+    H --> B
+
+    B --> I[Generate Final Answer]
+    I --> E
