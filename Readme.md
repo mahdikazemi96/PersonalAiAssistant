@@ -75,3 +75,15 @@ the retrieval system may return the entire document. The LLM would then receive 
 
 However, if you chunk the PDF into 20 meaningful pieces, the retrieval system can find the chunk containing the days-off policy 
 and send only that relevant information to the LLM. This can reduce the number of tokens sent to the LLM, reduce costs, and potentially make the answer faster and more focused.
+
+### How do Embedding, Vector Databses and Chunking, work together in a RAG system?
+First, we give some documents to the system. The system chunks the documents into smaller pieces.
+
+Second, it sends each chunk to the embedding model, which generates a vector for each chunk.
+
+Third, the system stores these vectors in a vector database such as Qdrant, usually together with their corresponding chunks and metadata.
+
+Fourth, when a question arrives, the system sends the question to the embedding model and gets a vector representing the question. 
+It then sends this vector to the vector database, which searches for vectors that are semantically similar to the question and returns the corresponding relevant chunks.
+
+Finally, the system gives the original question together with the retrieved chunks to the LLM. The LLM uses the retrieved information, together with its pretrained knowledge, to generate the response.
