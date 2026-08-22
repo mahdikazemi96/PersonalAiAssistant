@@ -90,6 +90,7 @@ It then sends this vector to the vector database, which searches for vectors tha
 
 Finally, the system gives the original question together with the retrieved chunks to the LLM. The LLM uses the retrieved information, together with its pretrained knowledge, to generate the response.
 
+```mermaid
 flowchart TD
     A[Documents] --> B[Chunking]
     B --> C[Embedding Model]
@@ -104,6 +105,7 @@ flowchart TD
     I --> J[Question + Retrieved Chunks]
     J --> K[LLM]
     K --> L[Final Answer]
+```
 
 ### LLM Tool Calling
 In a simple AI agent, the user sends a question to the agent, and the LLM generates an answer based on its pretrained knowledge. 
@@ -122,6 +124,7 @@ The result is then provided back to the LLM, which uses it to generate the final
 
 If no tool is needed, the LLM can answer directly.
 
+```mermaid
 flowchart TD
     A[User Question] --> B[LLM]
 
@@ -137,3 +140,4 @@ flowchart TD
 
     B --> I[Generate Final Answer]
     I --> E
+```
