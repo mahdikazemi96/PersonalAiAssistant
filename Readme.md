@@ -16,8 +16,8 @@
 * [Embedding Model](#embedding-model)
 * [Vector Database](#vector-database)
 * [RAG](#rag)
-* [Chunking] (#chunking)
-* [How do Embedding, Vector Databses and Chunking, work together in a RAG system?] (#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
+* [Chunking](#chunking)
+* [How do Embedding, Vector Databses and Chunking, work together in a RAG system?](#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
 
 
 ## About The Repo
