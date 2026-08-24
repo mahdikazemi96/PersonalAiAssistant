@@ -13,13 +13,15 @@
 ## Table of Contents
 * [About the repo](#about-the-repo)
 * [Some important concepts](#some-important-concepts)
-* [Embedding Model](#embedding-model)
-* [Vector Database](#vector-database)
-* [RAG](#rag)
-* [Chunking](#chunking)
-* [How do Embedding, Vector Databses and Chunking, work together in a RAG system?](#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
-* [LLM Tool Calling](#llm-tool-calling)
-* [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world?)
+  * [What is an AI Agent?](#what-is-an-ai-agent?)
+  * [What is LLM?](#what-is-llm?)
+  * [Embedding Model](#embedding-model)
+  * [Vector Database](#vector-database)
+  * [RAG](#rag)
+  * [Chunking](#chunking)
+  * [How do Embedding, Vector Databses and Chunking, work together in a RAG system?](#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
+  * [LLM Tool Calling](#llm-tool-calling)
+  * [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world?)
 
 
 ## About The Repo
@@ -33,6 +35,13 @@ where every developer can fetch the project, just write their tool, and add it t
 ## Some Important Concepts
 I want to explain some important concepts in the AI agents world, then start coding. 
 If you are a bit familiar with AI agents, you have probably heard about them. Understanding these concepts helps you design and develop AI agents more easily and better.
+
+### What is an AI Agent?
+**AI Agent** is a system built around an LLM that can understand a user's goal, decide what actions are needed, use available tools or knowledge, and produce a final result.
+
+### What is LLM?
+**LLM** (Large Language Model) is a **neural-network-based** model **trained** on a large amount of **text** to understand and generate **human language**. 
+In our project, the LLM is responsible for understanding the user's question and generating the final response.
 
 ### Embedding Model
 An embedding model converts **text** into a **vector**, which is a collection of **numerical** values. 
@@ -184,3 +193,4 @@ flowchart TD
     N --> O[Detokenization]
     O --> P[Human-readable Response]
 ```
+
