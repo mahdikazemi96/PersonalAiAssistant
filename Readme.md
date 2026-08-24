@@ -13,15 +13,15 @@
 ## Table of Contents
 * [About the repo](#about-the-repo)
 * [Some important concepts](#some-important-concepts)
-  * [What is an AI Agent?](#what-is-an-ai-agent?)
-  * [What is LLM?](#what-is-llm?)
+  * [What is an AI Agent?](#what-is-an-ai-agent)
+  * [What is LLM?](#what-is-llm)
   * [Embedding Model](#embedding-model)
   * [Vector Database](#vector-database)
   * [RAG](#rag)
   * [Chunking](#chunking)
   * [How do Embedding, Vector Databses and Chunking, work together in a RAG system?](#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
   * [LLM Tool Calling](#llm-tool-calling)
-  * [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world?)
+  * [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world)
 
 
 ## About The Repo
