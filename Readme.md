@@ -19,7 +19,7 @@
 * [Chunking](#chunking)
 * [How do Embedding, Vector Databses and Chunking, work together in a RAG system?](#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
 * [LLM Tool Calling](#llm-tool-calling)
-* [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-ai/llm-world?)
+* [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world?)
 
 
 ## About The Repo
@@ -35,18 +35,18 @@ I want to explain some important concepts in the AI agents world, then start cod
 If you are a bit familiar with AI agents, you have probably heard about them. Understanding these concepts helps you design and develop AI agents more easily and better.
 
 ### Embedding Model
-An embedding model converts text into a vector, which is a collection of numerical values. 
+An embedding model converts **text** into a **vector**, which is a collection of **numerical** values. 
 The values are not necessarily limited to a specific range and can also be negative.
 Forexample this is a vector of a text: [0.12, -0.43, 0.87, ...]
 
-An embedding model is trained to create numerical representations of the semantic characteristics of text. 
-During training, the model learns relationships between words, phrases, and their surrounding context from a large amount of text.
+An **embedding model** is trained to create **numerical representations** of the **semantic characteristics** of text. 
+During **training**, the model learns **relationships** between **words**, **phrases**, and their surrounding **context** from a **large amount of text**.
 
-When we give a piece of text to an embedding model, it generates a vector that represents the meaning and characteristics of that text. 
-Texts with similar meanings tend to produce vectors that are closer to each other in the vector space.
+When we give a piece of text to an **embedding model**, it generates a vector that **represents** the **meaning** and **characteristics** of that **text**. 
+**Texts** with **similar meanings** tend to produce **vectors** that are **closer** to each other in the vector space.
 
 ### Vector Database
-A Vector Database is a type of database designed to store and efficiently search vectors based on their similarity.
+A **Vector Database** is a type of database designed to store and efficiently **search vectors** based on their **similarity**.
 
 Typically, a vector is stored together with a payload containing information related to that vector, such as the original text, document name, or page number.
 
@@ -57,7 +57,7 @@ The Vector Database compares the query vector with the stored vectors and finds 
 It then returns the matching vectors together with their associated payloads.
 
 ### RAG
-RAG stands for Retrieval-Augmented Generation. RAG is a technique that allows an AI agent to use external knowledge without retraining or modifying its LLM.
+RAG stands for Retrieval-Augmented Generation. **RAG** is a technique that allows an AI agent to use **external knowledge without retraining** or modifying its LLM.
 
 Every AI agent typically uses an LLM that has already been trained and has knowledge learned during its training. 
 However, the LLM doesn't automatically have access to our private documents or other external knowledge.
@@ -114,7 +114,7 @@ However, there are situations where the LLM cannot directly perform an operation
 
 For example, if the user asks about tomorrow's weather, the LLM cannot know the actual forecast from its pretrained knowledge. It needs to call an external weather service.
 
-For these situations, we can provide the agent with tools. A tool is a function or service that the agent can call to perform a specific task or access external information. 
+For these situations, we can provide the agent with tools. A **tool** is a **function** or **service** that the **agent** can call **to perform** a specific **task** or **access external information**. 
 For example, we can create tools for weather information, mathematical calculations, database queries, or calling external APIs.
 
 When the agent receives a question, the LLM is given the available tools and their descriptions. 
