@@ -19,6 +19,7 @@
 * [Chunking](#chunking)
 * [How do Embedding, Vector Databses and Chunking, work together in a RAG system?](#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
 * [LLM Tool Calling](#llm-tool-calling)
+* [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-ai/llm-world?)
 
 
 ## About The Repo
@@ -140,4 +141,46 @@ flowchart TD
 
     B --> I[Generate Final Answer]
     I --> E
+```
+
+### What is a Token in the AI/LLM World?
+When a user asks a question, an AI agent prepares a prompt and sends it to an LLM. An LLM is a neural network based on the Transformer architecture, 
+and the neural network operates on numerical representations rather than directly processing human-readable text.
+
+Before the text can be processed by the LLM, it is converted into smaller pieces called **tokens**. 
+This process is called **tokenization**. Tokens are not necessarily complete words. A word can sometimes be represented by multiple tokens. For example, the word `unbelievable` might be split into `un`, `believ`, and `able`.
+
+A tokenizer has a vocabulary that maps tokens to token IDs. After tokenization, the text is represented as an array of token IDs and passed to the model. 
+The model then converts these token IDs into internal numerical representations called **token embeddings**.
+
+The core of an LLM is its neural network. Modern LLMs commonly use the **Transformer architecture**, 
+which consists of many layers that transform the numerical representations of the tokens and model the relationships between them. 
+During training, the model processes a huge amount of text and adjusts its parameters so it can recognize and reproduce patterns in how people use language.
+
+When generating an answer, the LLM does not produce the entire answer at once. Instead, it generates the response **one token at a time**. 
+For each step, the model processes the current context and produces scores for possible next tokens. These scores are converted into probabilities, 
+and a decoding strategy selects the next token. The selected token is then added to the context, and the process repeats until the model decides to stop.
+
+```mermaid
+flowchart TD
+    A[User Question] --> B[AI Agent]
+    B --> C[Prepare Prompt]
+    C --> D[Tokenizer]
+
+    D --> E[Token IDs]
+    E --> F[Token Embeddings]
+    F --> G[Transformer]
+
+    G --> H[Logits]
+    H --> I[Probabilities]
+    I --> J[Decoding / Sampling]
+    J --> K[Next Token]
+
+    K --> L{Stop?}
+    L -->|No| M[Add Token to Context]
+    M --> G
+
+    L -->|Yes| N[Generated Tokens]
+    N --> O[Detokenization]
+    O --> P[Human-readable Response]
 ```
