@@ -22,6 +22,7 @@
   * [How do Embedding, Vector Databses and Chunking, work together in a RAG system?](#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
   * [LLM Tool Calling](#llm-tool-calling)
   * [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world)
+ * [Project Overview](#project-overview)
 
 
 ## About The Repo
@@ -192,5 +193,36 @@ flowchart TD
     L -->|Yes| N[Generated Tokens]
     N --> O[Detokenization]
     O --> P[Human-readable Response]
+```
+
+## Project Overview
+**Personal AI Assistant** is a local AI agent built with **.NET** that can answer user questions based on the LLM's knowledge or use documents uploaded to the system to provide more relevant answers.
+
+The project also provides several **tools** that allow the AI assistant to access external services.
+For example, it can fetch weather forecasts or query a specific database through SQL Server. More tools can be added to the project to extend the assistant's capabilities.
+
+This project combines **RAG, embeddings, vector search, LLM tool calling, and a local LLM** to provide an AI assistant that can retrieve 
+relevant information from uploaded documents and call tools when a task requires external data or an operation that the LLM cannot perform by itself.
+
+The main goal of this project is to **learn how to build and run an AI agent and understand the fundamental concepts of the AI-agent world**, 
+such as **LLMs, embeddings, chunking, vector search, RAG, and tool calling**.
+
+```mermaid
+flowchart TD
+    A[User] --> B[AI Agent]
+
+    B --> C[LLM]
+
+    C --> D[RAG]
+    C --> E[Tools]
+
+    D --> F[Embedding Model]
+    F --> G[Qdrant]
+    G --> D
+
+    E --> H[External Services]
+
+    C --> I[Final Answer]
+    I --> A
 ```
 
