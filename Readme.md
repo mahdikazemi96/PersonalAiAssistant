@@ -23,6 +23,7 @@
   * [LLM Tool Calling](#llm-tool-calling)
   * [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world)
  * [Project Overview](#project-overview)
+ * [Architecture And Structure](#architecture-and-structure)
 
 
 ## About The Repo
@@ -226,3 +227,50 @@ flowchart TD
     I --> A
 ```
 
+## Architecture and Structure
+
+This is a **monolithic but pluggable** project. The core or brain of the project is called **Engine**. This is where the main services of the AI assistant are implemented. These services provide the main capabilities of our AI assistant.
+
+The **Engine** contains the following services:
+
+* **RAG Service** — enables the AI assistant to retrieve relevant information from uploaded documents and answer questions based on them.
+* **Answer Generation Service** — generates the final answer using the available context and the LLM.
+* **Conversation Service** — manages the user's previous messages and the current conversation context.
+* **Document Service** — receives documents, processes them, converts their chunks into vectors using the embedding model, and stores them in Qdrant.
+* **Chunk Service** — breaks large documents into smaller chunks before they are embedded and stored.
+* **Planner Service** — determines whether a tool is needed and handles scenarios where multiple tools need to be called.
+* **Assistant Service** — acts as the main orchestrator and coordinates the other services according to the user's request.
+
+Besides the **Engine**, the project contains the following components:
+
+* **Contracts** — contains shared data models and interfaces used between different parts of the system.
+* **Infrastructure** — contains implementations of the external technologies and infrastructure required by the AI assistant, such as the LLM provider and vector database.
+* **AgentTool** — provides the foundation for making the project pluggable by defining the base abstractions required to add new tools.
+* **AgentToolModules** — contains the actual tool implementations that can be added to the AI assistant.
+
+
+```mermaid
+flowchart TD
+    A[User] --> B[Assistant Service]
+
+    B --> C[Planner Service]
+    B --> D[Conversation Service]
+    B --> E[RAG Service]
+    B --> F[Answer Generation Service]
+
+    C --> G[AgentTool]
+    G --> H[AgentToolModules]
+
+    E --> I[Document Service]
+    E --> J[Qdrant]
+
+    I --> K[Chunk Service]
+    I --> L[Embedding Model]
+
+    F --> M[LLM]
+
+    D --> N[Conversation History]
+
+    B --> O[Contracts]
+    B --> P[Infrastructure]
+```
