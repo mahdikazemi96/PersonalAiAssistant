@@ -233,20 +233,20 @@ This is a **monolithic but pluggable** project. The core or brain of the project
 
 The **Engine** contains the following services:
 
-* **RAG Service** — enables the AI assistant to retrieve relevant information from uploaded documents and answer questions based on them.
-* **Answer Generation Service** — generates the final answer using the available context and the LLM.
+* **RAG Service**: enables the AI assistant to retrieve relevant information from uploaded documents and answer questions based on them.
+* **Answer Generation Service**: generates the final answer using the available context and the LLM.
 * **Conversation Service** — manages the user's previous messages and the current conversation context.
-* **Document Service** — receives documents, processes them, converts their chunks into vectors using the embedding model, and stores them in Qdrant.
-* **Chunk Service** — breaks large documents into smaller chunks before they are embedded and stored.
-* **Planner Service** — determines whether a tool is needed and handles scenarios where multiple tools need to be called.
-* **Assistant Service** — acts as the main orchestrator and coordinates the other services according to the user's request.
+* **Document Service**: receives documents, processes them, converts their chunks into vectors using the embedding model, and stores them in Qdrant.
+* **Chunk Service**: breaks large documents into smaller chunks before they are embedded and stored.
+* **Planner Service**: determines whether a tool is needed and handles scenarios where multiple tools need to be called.
+* **Assistant Service**: acts as the main orchestrator and coordinates the other services according to the user's request.
 
 Besides the **Engine**, the project contains the following components:
 
-* **Contracts** — contains shared data models and interfaces used between different parts of the system.
-* **Infrastructure** — contains implementations of the external technologies and infrastructure required by the AI assistant, such as the LLM provider and vector database.
-* **AgentTool** — provides the foundation for making the project pluggable by defining the base abstractions required to add new tools.
-* **AgentToolModules** — contains the actual tool implementations that can be added to the AI assistant.
+* **Contracts**: contains shared data models and interfaces used between different parts of the system.
+* **Infrastructure**: contains implementations of the external technologies and infrastructure required by the AI assistant, such as the LLM provider and vector database.
+* **AgentTool**: provides the foundation for making the project pluggable by defining the base abstractions required to add new tools.
+* **AgentToolModules**: contains the actual tool implementations that can be added to the AI assistant.
 
 
 ```mermaid
