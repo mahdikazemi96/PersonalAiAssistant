@@ -275,4 +275,5 @@ flowchart TD
 
     P --> Q[Qdrant]
     P --> R[LM Studio]
+    P --> S[Document Reader]
 ```
