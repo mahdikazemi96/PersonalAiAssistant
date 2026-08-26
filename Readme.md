@@ -235,7 +235,7 @@ The **Engine** contains the following services:
 
 * **RAG Service**: enables the AI assistant to retrieve relevant information from uploaded documents and answer questions based on them.
 * **Answer Generation Service**: generates the final answer using the available context and the LLM.
-* **Conversation Service** — manages the user's previous messages and the current conversation context.
+* **Conversation Service**: manages the user's previous messages and the current conversation context.
 * **Document Service**: receives documents, processes them, converts their chunks into vectors using the embedding model, and stores them in Qdrant.
 * **Chunk Service**: breaks large documents into smaller chunks before they are embedded and stored.
 * **Planner Service**: determines whether a tool is needed and handles scenarios where multiple tools need to be called.
@@ -262,7 +262,6 @@ flowchart TD
     G --> H[AgentToolModules]
 
     E --> I[Document Service]
-    E --> J[Qdrant]
 
     I --> K[Chunk Service]
     I --> L[Embedding Model]
@@ -273,4 +272,7 @@ flowchart TD
 
     B --> O[Contracts]
     B --> P[Infrastructure]
+
+    P --> Q[Qdrant]
+    P --> R[LM Studio]
 ```
