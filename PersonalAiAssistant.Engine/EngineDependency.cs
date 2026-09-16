@@ -22,7 +22,10 @@ namespace PersonalAiAssistant.Engine
 
             services.AddSingleton<AssistantService>();
 
+            services.AddSingleton<RagService>();
+
             services.AddKeyedSingleton<IPromptBuilder, ToolAgentPromptBuilder>("ToolAgentPromptBuilder");
+            services.AddKeyedSingleton<IPromptBuilder, RagPromptBuilder>("RagPromptBuilder");
 
             return services;
         }
