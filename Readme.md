@@ -24,8 +24,8 @@
   * [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world)
 * [Project Overview](#project-overview)
 * [Architecture And Structure](#architecture-and-structure)
-* [Infrastructure & Requirements](#Infrastructure-Requirements)
-  * [Basic Setup](#Basic-setup)
+* [Infrastructure & Requirements](#infrastructure--requirements)
+  * [Basic Setup](#basic-setup)
 
 
 ## About The Repo
