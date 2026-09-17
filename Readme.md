@@ -26,6 +26,7 @@
 * [Architecture And Structure](#architecture-and-structure)
 * [Infrastructure & Requirements](#infrastructure--requirements)
   * [Basic Setup](#basic-setup)
+* [Learn Through Branches](#learn-through-branches)
 
 
 ## About The Repo
@@ -303,3 +304,12 @@ For storing and searching the generated vectors, the project uses **Qdrant**, wh
 7. Run **Qdrant** using Docker.
 8. Open the Qdrant dashboard in your browser and verify that the database is running.
 
+## Learn Through Branches
+
+When I started this project, I knew that the final result would contain many different concepts and features that could be difficult to understand all at once. So, I decided to develop the project **feature by feature**, with each major feature implemented in a separate **Git branch**.
+
+Now that the project is complete, this approach provides a useful way to learn how the project evolved. By following the branches in order, you can see exactly what changed to introduce each new feature, understand why the feature was added, and learn how it works before moving on to the next one.
+
+Therefore, I recommend **not starting directly from the `main` branch**. Instead, start from **Branch 1** and follow the branches step by step.
+
+Each branch represents another step in building the AI assistant, while the `main` branch contains the final version of the project.
