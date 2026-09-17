@@ -24,6 +24,8 @@
   * [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world)
  * [Project Overview](#project-overview)
  * [Architecture And Structure](#architecture-and-structure)
+ * [Infrastructure & Requirements](#Infrastructure-Requirements)
+  * [Basic Setup](#Basic-setup)
 
 
 ## About The Repo
@@ -277,3 +279,27 @@ flowchart TD
     P --> R[LM Studio]
     P --> S[Document Reader]
 ```
+
+## Infrastructure & Requirements
+
+This project does not require a specific LLM or high-end hardware. Since it is a learning project, you can choose a local LLM based on your system's hardware capabilities.
+
+For running the LLM locally, this project uses **LM Studio**. LM Studio allows you to download and run different LLMs locally and exposes an API that the application can use to communicate with the model.
+
+In this project, I used `phi-3-mini-4k-instruct` as the LLM based on my system configuration. You can replace it with another model that is more suitable for your hardware.
+
+The project also requires an **embedding model** to convert text into vectors. I used `text-embedding-nomic-embed-text` through LM Studio.
+
+For storing and searching the generated vectors, the project uses **Qdrant**, which is a vector database. Qdrant is run locally using Docker.
+
+### Basic Setup
+
+1. Download and install **LM Studio**.
+2. Find and download an LLM that is suitable for your system.
+3. Load and run the LLM in LM Studio.
+4. Download and run `text-embedding-nomic-embed-text` as the embedding model.
+5. Start LM Studio's local API server and verify that the API endpoint is accessible.
+6. Install **Docker** if it is not already installed.
+7. Run **Qdrant** using Docker.
+8. Open the Qdrant dashboard in your browser and verify that the database is running.
+
