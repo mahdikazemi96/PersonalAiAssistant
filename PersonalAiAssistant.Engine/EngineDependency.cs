@@ -24,6 +24,8 @@ namespace PersonalAiAssistant.Engine
 
             services.AddSingleton<RagService>();
 
+            services.AddSingleton<HybridRankingService>();
+
             services.AddKeyedSingleton<IPromptBuilder, ToolAgentPromptBuilder>("ToolAgentPromptBuilder");
             services.AddKeyedSingleton<IPromptBuilder, RagPromptBuilder>("RagPromptBuilder");
 

@@ -9,9 +9,10 @@ namespace PersonalAiAssistant.Engine
     public class RagService
     {
         private static string prompt = null;
-            
+
         private readonly IEmbeddingClient _embeddingClient;
         private readonly QdrantService _qdrantService;
+        private readonly HybridRankingService _hybridRankingService;
         private readonly ConversationService _conversationService;
         private readonly IPromptBuilder _promptBuilder;
         private readonly IChatClient _chatClient;
@@ -19,12 +20,14 @@ namespace PersonalAiAssistant.Engine
         public RagService(
             IEmbeddingClient embeddingClient,
             QdrantService qdrantService,
+            HybridRankingService hybridRankingService,
             ConversationService conversationService,
             [FromKeyedServices("RagPromptBuilder")] IPromptBuilder promptBuilder,
             IChatClient chatClient)
         {
             _embeddingClient = embeddingClient;
             _qdrantService = qdrantService;
+            _hybridRankingService = hybridRankingService;
             _conversationService = conversationService;
             _promptBuilder = promptBuilder;
             _chatClient = chatClient;
@@ -45,6 +48,9 @@ namespace PersonalAiAssistant.Engine
 
             var documents =
                 await _qdrantService.SearchAsync(embedding);
+
+            documents = _hybridRankingService
+                .Rank(question, documents);
 
             if (documents.Count == 0)
                 return null;
