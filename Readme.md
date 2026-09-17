@@ -22,9 +22,9 @@
   * [How do Embedding, Vector Databses and Chunking, work together in a RAG system?](#how-do-embedding-vector-databses-and-chunking-work-together-in-a-rag-system)
   * [LLM Tool Calling](#llm-tool-calling)
   * [What is a Token in the AI/LLM World?](#what-is-a-token-in-the-aillm-world)
- * [Project Overview](#project-overview)
- * [Architecture And Structure](#architecture-and-structure)
- * [Infrastructure & Requirements](#Infrastructure-Requirements)
+* [Project Overview](#project-overview)
+* [Architecture And Structure](#architecture-and-structure)
+* [Infrastructure & Requirements](#Infrastructure-Requirements)
   * [Basic Setup](#Basic-setup)
 
 
